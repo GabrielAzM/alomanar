@@ -5,8 +5,8 @@
 {% block content %}
 <section class="cart-page">
     <div class="title-container">
-        <h1 class="h1-title">Carrinho</h1>
-        <h2 class="h2-subtitle">Resumo</h2>
+        <h1 class="h1-title">Sacola</h1>
+        <h2 class="h2-subtitle">Visao completa do pedido</h2>
     </div>
 
     {% if cart_lines %}
@@ -18,8 +18,10 @@
                             <img src="{{ url_for('static', filename='img/' ~ line.product.image_filename) }}" alt="{{ line.product.name }}">
                         </a>
                         <div class="cart-item-info">
+                            <p class="product-brand">{{ line.product.brand }}</p>
                             <h3>{{ line.product.name }}</h3>
-                            <p>{{ line.product.price_cents | brl }} unidade</p>
+                            <p>{{ line.product.subcategory_label }}{% if line.product.size_label %} | {{ line.product.size_label }}{% endif %}</p>
+                            <p>{{ line.product.price_cents | brl }} por unidade</p>
                             <form class="cart-quantity-form" action="{{ url_for('store.update_cart_item', item_id=line.product.id) }}" method="post">
                                 <input type="hidden" name="next" value="{{ request.path }}">
                                 <label for="qtd-{{ line.product.id }}">Quantidade</label>
@@ -39,7 +41,7 @@
             <aside class="cart-summary">
                 <h3>Total parcial</h3>
                 <p class="cart-summary-total">{{ subtotal_cents | brl }}</p>
-                <p class="cart-summary-hint">No checkout o cupom de 100% sera aplicado automaticamente.</p>
+                <p class="cart-summary-hint">No checkout o cupom promocional sera aplicado automaticamente.</p>
                 <a class="buy-button cart-checkout-btn" href="{{ url_for('store.checkout_page') }}">Ir para checkout</a>
             </aside>
         </div>

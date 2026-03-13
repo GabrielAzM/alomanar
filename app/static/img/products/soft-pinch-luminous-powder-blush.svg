@@ -1,0 +1,34 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900' viewBox='0 0 480 480' role='img' aria-labelledby='title desc'>
+<title>Blush em Po Soft Pinch Luminous</title>
+<desc>Packshot em fundo de estudio para o produto Blush em Po Soft Pinch Luminous.</desc>
+<defs>
+  <linearGradient id='bg' x1='0%' y1='0%' x2='0%' y2='100%'>
+    <stop offset='0%' stop-color='#fff6f8'/>
+    <stop offset='100%' stop-color='#ffffff'/>
+  </linearGradient>
+  <linearGradient id='packBody' x1='0%' y1='0%' x2='100%' y2='100%'>
+    <stop offset='0%' stop-color='#a13859'/>
+    <stop offset='100%' stop-color='#b8a73e'/>
+  </linearGradient>
+  <filter id='shadow' x='-50%' y='-50%' width='200%' height='220%'>
+    <feDropShadow dx='0' dy='18' stdDeviation='16' flood-color='#1f1017' flood-opacity='0.22'/>
+  </filter>
+  <filter id='blur'><feGaussianBlur stdDeviation='12'/></filter>
+</defs>
+<rect width='480' height='480' fill='url(#bg)'/>
+<ellipse cx='240' cy='416' rx='128' ry='24' fill='#ceb8be' opacity='0.38' filter='url(#blur)'/>
+<circle cx='110' cy='90' r='66' fill='#f4ccd7' opacity='0.55'/>
+<circle cx='382' cy='124' r='44' fill='#f0d9df' opacity='0.5'/>
+<rect x='70' y='36' width='340' height='408' rx='42' fill='rgba(255,255,255,0.56)' stroke='rgba(122, 30, 58, 0.05)'/>
+
+        <g filter='url(#shadow)'>
+          <rect x='128' y='174' width='224' height='270' rx='38' fill='#6f2940'/>
+          <rect x='144' y='190' width='192' height='98' rx='26' fill='rgba(255,255,255,0.16)'/>
+          <rect x='154' y='304' width='172' height='108' rx='24' fill='rgba(255,255,255,0.92)'/>
+          <circle cx='198' cy='242' r='30' fill='#f0d9df' opacity='0.8'/>
+          <circle cx='240' cy='242' r='30' fill='#a13859' opacity='0.85'/>
+          <circle cx='282' cy='242' r='30' fill='#6f2940' opacity='0.55'/>
+          <text x='240' y='246' text-anchor='middle' fill='#6f2940' font-size='18' font-family='Montserrat, Arial, sans-serif' font-weight='700' letter-spacing='2'>RARE BEAUTY</text><text x='240' y='272' text-anchor='middle' fill='#6f2940' opacity='0.7' font-size='11' font-family='Lato, Arial, sans-serif'>BLUSH EM PO</text><text x='240' y='306' text-anchor='middle' fill='#6f2940' font-size='16' font-family='Montserrat, Arial, sans-serif' font-weight='600'>Blush em Po Soft</text><text x='240' y='326' text-anchor='middle' fill='#6f2940' font-size='16' font-family='Montserrat, Arial, sans-serif' font-weight='600'>Pinch Luminous</text><text x='240' y='356' text-anchor='middle' fill='#6f2940' opacity='0.7' font-size='11' font-family='Lato, Arial, sans-serif'>Joy ? 2.8 g</text>
+        </g>
+        
+</svg>

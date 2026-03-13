@@ -6,8 +6,22 @@
 <section class="orders-page">
     <div class="orders-header">
         <h1>Meus pedidos</h1>
-        <p>Acompanhe o andamento das solicitacoes registradas na sua conta.</p>
+        <p>Acompanhe o andamento dos pedidos registrados na sua conta.</p>
     </div>
+
+    <article class="order-card account-summary-card">
+        <h2>Conta e entrega padrao</h2>
+        <p><strong>Cliente:</strong> {{ user.full_name or user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Telefone:</strong> {{ user.phone or "-" }}</p>
+        {% if user.has_saved_address %}
+            <p><strong>Endereco:</strong> {{ user.address_line }}</p>
+            <p><strong>Localidade:</strong> {{ user.city_line }}</p>
+            <p><strong>CEP:</strong> {{ user.zip_code }}</p>
+        {% else %}
+            <p>Seu endereco sera salvo automaticamente no proximo checkout.</p>
+        {% endif %}
+    </article>
 
     {% if orders %}
         <div class="orders-table-wrapper">
@@ -16,8 +30,7 @@
                     <tr>
                         <th>Protocolo</th>
                         <th>Data</th>
-                        <th>Categoria</th>
-                        <th>Urgencia</th>
+                        <th>Itens</th>
                         <th>Status</th>
                         <th>Total</th>
                         <th></th>
@@ -28,8 +41,7 @@
                         <tr>
                             <td>#{{ order.id }}</td>
                             <td>{{ order.created_at | datetime_br }}</td>
-                            <td>{{ order.mapped_category }}</td>
-                            <td>{{ order.urgency_level }}</td>
+                            <td>{{ order.get_items() | length }} item(ns)</td>
                             <td>{{ order.status }}</td>
                             <td>{{ order.total_cents | brl }}</td>
                             <td><a class="table-link" href="{{ url_for('user.order_detail_page', occurrence_id=order.id) }}">Acompanhar</a></td>

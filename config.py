@@ -17,6 +17,7 @@ class Config:
         os.environ.get("DATABASE_URL", f"sqlite:///{(BASE_DIR / 'alomana.db').as_posix()}")
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    QUICK_EXIT_URL = os.environ.get("QUICK_EXIT_URL", "https://www.google.com/")
     ADMIN_DEFAULT_USERNAME = os.environ.get("ADMIN_DEFAULT_USERNAME", "admin")
     ADMIN_DEFAULT_PASSWORD = os.environ.get("ADMIN_DEFAULT_PASSWORD", "admin123")
     USER_DEFAULT_USERNAME = os.environ.get("USER_DEFAULT_USERNAME", "usuario_demo")

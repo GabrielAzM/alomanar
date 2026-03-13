@@ -13,21 +13,32 @@
         <article class="order-card">
             <h2>Resumo</h2>
             <p><strong>Data:</strong> {{ order.created_at | datetime_br }}</p>
-            <p><strong>Categoria:</strong> {{ order.mapped_category }}</p>
-            <p><strong>Urgencia:</strong> {{ order.urgency_level }}</p>
-            <p><strong>Observacao:</strong> {{ order.observation or "-" }}</p>
-            <p><strong>Contato:</strong> {{ order.contact_phone or "-" }} | {{ order.contact_email or "-" }}</p>
+            <p><strong>Recebimento:</strong> {{ order.recipient_name or "-" }}</p>
+            <p><strong>Telefone:</strong> {{ order.contact_phone or "-" }}</p>
+            <p><strong>Email:</strong> {{ order.contact_email or "-" }}</p>
+            <p><strong>Janela de entrega:</strong> {{ order.delivery_window or "-" }}</p>
+            <p><strong>Observacao do pedido:</strong> {{ order.observation or "-" }}</p>
             <p><strong>Total:</strong> {{ order.total_cents | brl }}</p>
         </article>
 
         <article class="order-card">
-            <h2>Itens registrados</h2>
+            <h2>Entrega</h2>
+            <p><strong>Endereco:</strong> {{ order.address_line or "-" }}</p>
+            <p><strong>Localidade:</strong> {{ order.city_line or "-" }}</p>
+            <p><strong>CEP:</strong> {{ order.address_zip_code or "-" }}</p>
+            <p><strong>Instrucoes:</strong> {{ order.delivery_notes or "-" }}</p>
+        </article>
+    </div>
+
+    <article class="order-card">
+        <h2>Itens do pedido</h2>
             {% set items = order.get_items() %}
             {% if items %}
                 <ul class="order-list">
                     {% for item in items %}
                         <li>
                             <strong>{{ item.product_name }}</strong>
+                            <span>{{ item.brand }}{% if item.subcategory_label %} | {{ item.subcategory_label }}{% endif %}</span>
                             <span>Qtd: {{ item.quantity }} | {{ item.line_total_cents | brl }}</span>
                         </li>
                     {% endfor %}
@@ -35,8 +46,7 @@
             {% else %}
                 <p>Nenhum item encontrado.</p>
             {% endif %}
-        </article>
-    </div>
+    </article>
 
     <article class="order-card">
         <h2>Historico de status</h2>
@@ -58,9 +68,9 @@
     </article>
 
     <article class="order-card">
-        <h2>Mensagens para a equipe</h2>
+        <h2>Mensagens para o atendimento</h2>
         <form class="user-message-form" action="{{ url_for('user.order_add_message', occurrence_id=order.id) }}" method="post">
-            <textarea name="message_text" rows="4" maxlength="2000" placeholder="Escreva uma atualizacao para a equipe de triagem..." required></textarea>
+            <textarea name="message_text" rows="4" maxlength="2000" placeholder="Escreva uma atualizacao sobre entrega, contato ou observacoes do pedido..." required></textarea>
             <button class="buy-button" type="submit">Enviar mensagem</button>
         </form>
 

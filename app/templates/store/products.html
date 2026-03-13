@@ -12,6 +12,7 @@
 
         <form class="filtros-container filtros-form" action="{{ url_for('store.products_page') }}" method="get">
             <input type="hidden" name="q" value="{{ search_term }}">
+            <input type="hidden" name="ordem" value="{{ selected_order }}">
 
             <details class="filtro-grupo" open>
                 <summary class="filtro-header">Categorias</summary>
@@ -43,10 +44,17 @@
                 </ul>
             </details>
 
-            <details class="filtro-grupo">
+            <details class="filtro-grupo" open>
                 <summary class="filtro-header">Preco</summary>
                 <ul class="filtro-lista">
-                    <li class="filtro-item-opcao">Ordene por menor ou maior preco.</li>
+                    {% for option in price_filter_options %}
+                        <li class="filtro-item-opcao">
+                            <label>
+                                <input type="radio" name="faixa_preco" value="{{ option.code }}" {% if selected_price_filter == option.code %}checked{% endif %}>
+                                {{ option.label }}
+                            </label>
+                        </li>
+                    {% endfor %}
                 </ul>
             </details>
 
@@ -57,7 +65,7 @@
     <section class="produtos-vitrine">
         {% if category_copy %}
             <article class="category-hero">
-                <div class="category-hero-image"></div>
+                <div class="category-hero-image" style="background-image: url('{{ url_for('static', filename='img/' ~ category_copy.image_filename) }}');"></div>
                 <div class="category-hero-copy">
                     <h2>{{ category_copy.title }}</h2>
                     <h3>{{ category_copy.subtitle }}</h3>
@@ -75,8 +83,12 @@
                 {% if selected_category != 'todos' %}
                     <input type="hidden" name="categoria" value="{{ selected_category }}">
                 {% endif %}
+                {% if selected_price_filter != 'todos' %}
+                    <input type="hidden" name="faixa_preco" value="{{ selected_price_filter }}">
+                {% endif %}
                 <select class="select-customizado" name="ordem" onchange="this.form.submit()">
                     <option value="mais-vendidos" {% if selected_order == 'mais-vendidos' %}selected{% endif %}>Mais vendidos</option>
+                    <option value="mais-avaliados" {% if selected_order == 'mais-avaliados' %}selected{% endif %}>Mais avaliados</option>
                     <option value="menor-preco" {% if selected_order == 'menor-preco' %}selected{% endif %}>Menor preco</option>
                     <option value="maior-preco" {% if selected_order == 'maior-preco' %}selected{% endif %}>Maior preco</option>
                 </select>
@@ -91,14 +103,16 @@
                             <img src="{{ url_for('static', filename='img/' ~ product.image_filename) }}" alt="{{ product.name }}" class="product-image">
                         </a>
                         <div class="product-info">
+                            <p class="product-brand">{{ product.brand }}{% if product.badge_label %} <span>{{ product.badge_label }}</span>{% endif %}</p>
                             <h3 class="product-title">
                                 <a href="{{ url_for('store.product_detail_page', slug=product.slug) }}" class="product-link">{{ product.name }}</a>
                             </h3>
                             <p class="product-description">{{ product.description_short }}</p>
+                            <p class="product-meta-line">{{ product.subcategory_label }}{% if product.shade_label %} | {{ product.shade_label }}{% endif %}{% if product.size_label %} | {{ product.size_label }}{% endif %}</p>
                             <div class="product-footer">
                                 <div class="price-box">
                                     <span class="price-value">{{ product.price_cents | brl }}</span>
-                                    <span class="price-installments">ou em 2x de {{ (product.price_cents // 2) | brl }}</span>
+                                    <span class="price-installments">{{ product.rating }} / 5 com {{ product.review_count }} avaliacoes</span>
                                 </div>
                                 <form action="{{ url_for('store.add_cart_item') }}" method="post">
                                     <input type="hidden" name="product_id" value="{{ product.id }}">

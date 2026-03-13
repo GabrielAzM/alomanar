@@ -31,7 +31,13 @@
                     -
                 {% endif %}
             </p>
+            <p><strong>Recebimento:</strong> {{ occurrence.recipient_name or "-" }}</p>
             <p><strong>Contato:</strong> {{ occurrence.contact_phone or "-" }} | {{ occurrence.contact_email or "-" }}</p>
+            <p><strong>Endereco:</strong> {{ occurrence.address_line or "-" }}</p>
+            <p><strong>Localidade:</strong> {{ occurrence.city_line or "-" }}</p>
+            <p><strong>CEP:</strong> {{ occurrence.address_zip_code or "-" }}</p>
+            <p><strong>Janela de entrega:</strong> {{ occurrence.delivery_window or "-" }}</p>
+            <p><strong>Instrucoes:</strong> {{ occurrence.delivery_notes or "-" }}</p>
             <p><strong>Observacao:</strong> {{ occurrence.observation or "-" }}</p>
             <p><strong>Subtotal:</strong> {{ occurrence.subtotal_cents | brl }}</p>
             <p><strong>Desconto:</strong> {{ occurrence.discount_cents | brl }}</p>
@@ -61,6 +67,7 @@
                     {% for item in checkout_items %}
                         <li>
                             <strong>{{ item.product_name }}</strong> x{{ item.quantity }}
+                            <span>{{ item.brand }}{% if item.subcategory_label %} | {{ item.subcategory_label }}{% endif %}</span>
                             <span>{{ item.line_total_cents | brl }}</span>
                         </li>
                     {% endfor %}

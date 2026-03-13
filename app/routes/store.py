@@ -1,6 +1,7 @@
 from flask import (
     Blueprint,
     abort,
+    current_app,
     flash,
     redirect,
     render_template,
@@ -24,58 +25,86 @@ from app.models import (
 store_bp = Blueprint("store", __name__)
 
 CART_SESSION_KEY = "cart"
-AUTO_COUPON_CODE = "CUIDADO100"
+AUTO_COUPON_CODE = "ALOCLUB100"
 USER_SESSION_KEY = "user_id"
 
 CATEGORY_PAGE_COPY = {
     "kits": {
-        "title": "Kits",
-        "subtitle": "Combinacoes estrategicas para uma rotina completa",
+        "title": "Kits e acessorios",
+        "subtitle": "Ferramentas praticas para montar uma rotina completa",
         "text": (
-            "As vezes, um unico cuidado nao basta. Nossos kits reforcam protecao, "
-            "conexao e precisao em um fluxo familiar de e-commerce."
+            "Selecao de pinceis, esponjas e combos para facilitar o dia a dia de quem "
+            "gosta de maquiagem bem acabada com menos improviso."
         ),
+        "image_filename": "img-categorias-acessorios-alomana.jpg",
     },
     "skincare": {
         "title": "Skincare",
-        "subtitle": "Base de defesa diaria",
+        "subtitle": "Cuidado diario com texturas leves e produtos desejados",
         "text": (
-            "Antes de qualquer cobertura, existe a integridade da pele. Esta secao "
-            "simboliza preparo, barreira e continuidade de cuidado."
+            "Rotina com limpeza, hidratacao e protecao para preparar a pele e manter "
+            "o viro saudavel em qualquer horario."
         ),
+        "image_filename": "img-categorias-skincare-alomana.jpg",
     },
     "maquiagem": {
         "title": "Maquiagem",
-        "subtitle": "Expressao com controle e discricao",
+        "subtitle": "Bases, olhos, labios e acabamento com cara de best-seller",
         "text": (
-            "A vitrine de maquiagem sustenta a camuflagem da interface e permite "
-            "navegacao sem sinais explicitos de denuncia."
+            "Vitrine com produtos que aparecem em listas de favoritos de quem procura "
+            "boa performance, acabamento bonito e praticidade."
         ),
+        "image_filename": "img-categorias-face-alomana.jpg",
     },
 }
 
 TESTIMONIALS = [
     {
-        "name": "CAROL",
+        "name": "Yngrid",
         "photo": "img-clientes1-alomana.jpg",
-        "text": "Senti que consegui seguir o fluxo com naturalidade e sem chamar atencao.",
+        "text": "Encontrei varias marcas conhecidas e o checkout foi rapido, direto e facil de acompanhar.",
     },
     {
-        "name": "ADRIANA",
+        "name": "Camilla",
         "photo": "img-clientes2-alomana.jpg",
-        "text": "A linguagem de cuidado foi clara e discreta durante toda a navegacao.",
+        "text": "Gostei dos kits e da selecao de skincare. A navegacao passa mesmo cara de loja pronta.",
     },
     {
-        "name": "IGOR",
+        "name": "Ana Caren",
         "photo": "img-clientes3-alomana.jpg",
-        "text": "Painel administrativo objetivo para triagem e encaminhamento das ocorrencias.",
+        "text": "Os detalhes de produto e a organizacao por categoria deixaram a vitrine muito mais crivel.",
     },
     {
-        "name": "SELMA",
+        "name": "Daviane",
         "photo": "img-clientes4-alomana.jpg",
-        "text": "Checkout sem cobranca e registro rapido foram pontos fortes do prototipo.",
+        "text": "O cupom de lancamento no checkout fechou bem a experiencia e ficou coerente com campanha promocional.",
     },
 ]
+
+HOME_BENEFITS = [
+    {
+        "title": "Marcas conhecidas",
+        "text": "Curadoria com nomes lembrados em maquiagem, skincare e acessorios.",
+    },
+    {
+        "title": "Cupom de estreia",
+        "text": "Campanha promocional automatica para concluir o pedido sem atrito.",
+    },
+    {
+        "title": "Acompanhamento online",
+        "text": "Cada pedido gera protocolo e historico dentro da conta da cliente.",
+    },
+]
+
+PRICE_FILTER_OPTIONS = (
+    {"code": "todos", "label": "Todos os precos", "min_cents": None, "max_cents": None},
+    {"code": "ate-99", "label": "Ate R$ 99", "min_cents": None, "max_cents": 9999},
+    {"code": "100-179", "label": "R$ 100 a R$ 179", "min_cents": 10000, "max_cents": 17999},
+    {"code": "180-249", "label": "R$ 180 a R$ 249", "min_cents": 18000, "max_cents": 24999},
+    {"code": "250-ou-mais", "label": "Acima de R$ 250", "min_cents": 25000, "max_cents": None},
+)
+
+PRICE_FILTERS_BY_CODE = {item["code"]: item for item in PRICE_FILTER_OPTIONS}
 
 
 def _sanitize_quantity(raw_quantity, default_value=1):
@@ -84,6 +113,31 @@ def _sanitize_quantity(raw_quantity, default_value=1):
     except (TypeError, ValueError):
         return default_value
     return max(1, min(qty, 99))
+
+
+def _normalize_digits(raw_value):
+    return "".join(char for char in str(raw_value or "") if char.isdigit())
+
+
+def _format_zip_code(raw_value):
+    digits = _normalize_digits(raw_value)
+    if len(digits) != 8:
+        return (raw_value or "").strip()
+    return f"{digits[:5]}-{digits[5:]}"
+
+
+def _format_phone(raw_value):
+    digits = _normalize_digits(raw_value)
+    if len(digits) == 11:
+        return f"({digits[:2]}) {digits[2:7]}-{digits[7:]}"
+    if len(digits) == 10:
+        return f"({digits[:2]}) {digits[2:6]}-{digits[6:]}"
+    return (raw_value or "").strip()
+
+
+def _is_valid_email(value):
+    cleaned = (value or "").strip()
+    return "@" in cleaned and "." in cleaned.split("@")[-1]
 
 
 def _get_cart_dict():
@@ -144,10 +198,37 @@ def _apply_ordering(query, order_code):
         return query.order_by(Product.price_cents.asc(), Product.id.asc())
     if order_code == "maior-preco":
         return query.order_by(Product.price_cents.desc(), Product.id.asc())
+    if order_code == "mais-avaliados":
+        return query.order_by(Product.rating.desc(), Product.review_count.desc(), Product.id.asc())
     return query.order_by(Product.featured_order.asc(), Product.id.asc())
 
 
-def _load_products(search_term="", category_slug="", order_code="mais-vendidos"):
+def _normalize_price_filter(price_filter_code):
+    normalized = (price_filter_code or "todos").strip().lower()
+    return normalized if normalized in PRICE_FILTERS_BY_CODE else "todos"
+
+
+def _apply_price_filter(query, price_filter_code):
+    selected_filter = PRICE_FILTERS_BY_CODE.get(_normalize_price_filter(price_filter_code))
+    if not selected_filter:
+        return query
+
+    min_cents = selected_filter["min_cents"]
+    max_cents = selected_filter["max_cents"]
+
+    if min_cents is not None:
+        query = query.filter(Product.price_cents >= min_cents)
+    if max_cents is not None:
+        query = query.filter(Product.price_cents <= max_cents)
+    return query
+
+
+def _load_products(
+    search_term="",
+    category_slug="",
+    order_code="mais-vendidos",
+    price_filter_code="todos",
+):
     query = Product.query.filter(Product.active.is_(True))
 
     if category_slug and category_slug != "todos":
@@ -158,11 +239,14 @@ def _load_products(search_term="", category_slug="", order_code="mais-vendidos")
         query = query.filter(
             or_(
                 Product.name.ilike(like_term),
+                Product.brand.ilike(like_term),
+                Product.subcategory_label.ilike(like_term),
                 Product.description_short.ilike(like_term),
                 Product.description_long.ilike(like_term),
             )
         )
 
+    query = _apply_price_filter(query, price_filter_code)
     query = _apply_ordering(query, order_code)
     return query.all()
 
@@ -174,13 +258,90 @@ def _current_user():
     return db.session.get(User, user_id)
 
 
+def _build_checkout_form_data(user, source=None):
+    source = source or {}
+    return {
+        "recipient_name": (source.get("recipient_name") or user.full_name or "").strip(),
+        "contact_phone": _format_phone(source.get("contact_phone") or user.phone or ""),
+        "contact_email": (source.get("contact_email") or user.email or "").strip().lower(),
+        "zip_code": _format_zip_code(source.get("zip_code") or user.zip_code or ""),
+        "street": (source.get("street") or user.street or "").strip(),
+        "number": (source.get("number") or user.number or "").strip(),
+        "complement": (source.get("complement") or user.complement or "").strip(),
+        "neighborhood": (source.get("neighborhood") or user.neighborhood or "").strip(),
+        "city": (source.get("city") or user.city or "").strip(),
+        "state": (source.get("state") or user.state or "").strip().upper(),
+        "delivery_window": (source.get("delivery_window") or "").strip(),
+        "delivery_notes": (source.get("delivery_notes") or "").strip(),
+        "observation": (source.get("observation") or "").strip(),
+    }
+
+
+def _validate_checkout_form(form_data):
+    required_labels = {
+        "recipient_name": "nome de recebimento",
+        "zip_code": "CEP",
+        "street": "rua",
+        "number": "numero",
+        "neighborhood": "bairro",
+        "city": "cidade",
+        "state": "UF",
+    }
+
+    errors = []
+    for field_name, label in required_labels.items():
+        if not form_data[field_name]:
+            errors.append(f"Preencha {label}.")
+
+    if form_data["recipient_name"] and len(form_data["recipient_name"]) < 5:
+        errors.append("Informe um nome de recebimento mais completo.")
+
+    if form_data["zip_code"] and len(_normalize_digits(form_data["zip_code"])) != 8:
+        errors.append("Informe um CEP valido com 8 digitos.")
+
+    phone_digits = _normalize_digits(form_data["contact_phone"])
+    if phone_digits and len(phone_digits) not in (10, 11):
+        errors.append("Informe um telefone valido com DDD.")
+
+    if form_data["contact_email"] and not _is_valid_email(form_data["contact_email"]):
+        errors.append("Informe um email valido para contato.")
+
+    if form_data["state"] and len(form_data["state"]) != 2:
+        errors.append("Informe a UF com 2 letras.")
+
+    if len(form_data["delivery_notes"]) > 400:
+        errors.append("As instrucoes de entrega devem ter no maximo 400 caracteres.")
+
+    if len(form_data["observation"]) > 2000:
+        errors.append("A observacao do pedido deve ter no maximo 2000 caracteres.")
+
+    return errors
+
+
+def _render_checkout(user, cart_lines, subtotal_cents, form_data=None):
+    discount_cents = subtotal_cents
+    total_cents = 0
+    return render_template(
+        "store/checkout.html",
+        cart_lines=cart_lines,
+        subtotal_cents=subtotal_cents,
+        discount_cents=discount_cents,
+        total_cents=total_cents,
+        auto_coupon_code=AUTO_COUPON_CODE,
+        user=user,
+        checkout_data=form_data or _build_checkout_form_data(user),
+        active_nav="checkout",
+    )
+
+
 @store_bp.route("/")
 def home_page():
-    featured_products = _load_products(order_code="mais-vendidos")[:4]
+    featured_products = _load_products(order_code="mais-avaliados")[:6]
     return render_template(
         "store/home.html",
         featured_products=featured_products,
         testimonials=TESTIMONIALS,
+        home_benefits=HOME_BENEFITS,
         active_nav="home",
     )
 
@@ -190,13 +351,21 @@ def products_page():
     search_term = request.args.get("q", "").strip()
     category_slug = request.args.get("categoria", "todos").strip().lower() or "todos"
     order_code = request.args.get("ordem", "mais-vendidos").strip().lower() or "mais-vendidos"
-    products = _load_products(search_term=search_term, category_slug=category_slug, order_code=order_code)
+    price_filter_code = _normalize_price_filter(request.args.get("faixa_preco", "todos"))
+    products = _load_products(
+        search_term=search_term,
+        category_slug=category_slug,
+        order_code=order_code,
+        price_filter_code=price_filter_code,
+    )
 
     return render_template(
         "store/products.html",
         products=products,
         selected_category=category_slug,
         selected_order=order_code,
+        selected_price_filter=price_filter_code,
+        price_filter_options=PRICE_FILTER_OPTIONS,
         search_term=search_term,
         category_copy=CATEGORY_PAGE_COPY.get(category_slug),
         active_nav="produtos" if category_slug == "todos" else category_slug,
@@ -211,13 +380,21 @@ def category_page(slug):
 
     search_term = request.args.get("q", "").strip()
     order_code = request.args.get("ordem", "mais-vendidos").strip().lower() or "mais-vendidos"
-    products = _load_products(search_term=search_term, category_slug=category_slug, order_code=order_code)
+    price_filter_code = _normalize_price_filter(request.args.get("faixa_preco", "todos"))
+    products = _load_products(
+        search_term=search_term,
+        category_slug=category_slug,
+        order_code=order_code,
+        price_filter_code=price_filter_code,
+    )
 
     return render_template(
         "store/products.html",
         products=products,
         selected_category=category_slug,
         selected_order=order_code,
+        selected_price_filter=price_filter_code,
+        price_filter_options=PRICE_FILTER_OPTIONS,
         search_term=search_term,
         category_copy=CATEGORY_PAGE_COPY[category_slug],
         active_nav=category_slug,
@@ -248,7 +425,7 @@ def product_detail_page(slug):
             Product.category_slug == product.category_slug,
             Product.id != product.id,
         )
-        .order_by(Product.featured_order.asc(), Product.id.asc())
+        .order_by(Product.rating.desc(), Product.review_count.desc(), Product.id.asc())
         .limit(4)
         .all()
     )
@@ -274,6 +451,12 @@ def cart_page():
         subtotal_cents=subtotal_cents,
         active_nav="carrinho",
     )
+
+
+@store_bp.route("/saida-rapida")
+def quick_exit():
+    session.clear()
+    return redirect(current_app.config.get("QUICK_EXIT_URL", "https://www.google.com/"))
 
 
 @store_bp.route("/carrinho/item", methods=["POST"])
@@ -343,21 +526,10 @@ def checkout_page():
 
     user = _current_user()
     if not user:
-        flash("Faca login para acompanhar seu pedido.", "warning")
+        flash("Entre na sua conta para acompanhar o pedido.", "warning")
         return redirect(url_for("user.login_page", next=url_for("store.checkout_page")))
 
-    discount_cents = subtotal_cents
-    total_cents = 0
-    return render_template(
-        "store/checkout.html",
-        cart_lines=cart_lines,
-        subtotal_cents=subtotal_cents,
-        discount_cents=discount_cents,
-        total_cents=total_cents,
-        auto_coupon_code=AUTO_COUPON_CODE,
-        user=user,
-        active_nav="checkout",
-    )
+    return _render_checkout(user, cart_lines, subtotal_cents)
 
 
 @store_bp.route("/checkout/finalizar", methods=["POST"])
@@ -369,12 +541,15 @@ def checkout_finalize():
 
     user = _current_user()
     if not user:
-        flash("Faca login para concluir e acompanhar seu pedido.", "warning")
+        flash("Entre na sua conta para concluir o pedido.", "warning")
         return redirect(url_for("user.login_page", next=url_for("store.checkout_page")))
 
-    observation = (request.form.get("observation") or "").strip() or None
-    contact_phone = (request.form.get("contact_phone") or "").strip() or None
-    contact_email = (request.form.get("contact_email") or "").strip() or None
+    form_data = _build_checkout_form_data(user, request.form)
+    errors = _validate_checkout_form(form_data)
+    if errors:
+        for error_message in errors:
+            flash(error_message, "error")
+        return _render_checkout(user, cart_lines, subtotal_cents, form_data=form_data)
 
     product_ids = [line["product"].id for line in cart_lines]
     mappings = OccurrenceMapping.query.filter(OccurrenceMapping.product_id.in_(product_ids)).all()
@@ -382,8 +557,8 @@ def checkout_finalize():
 
     categories = []
     highest_urgency = "Baixa"
-
     items_snapshot = []
+
     for line in cart_lines:
         product = line["product"]
         mapping = mappings_by_product_id.get(product.id)
@@ -401,7 +576,8 @@ def checkout_finalize():
             {
                 "product_id": product.id,
                 "product_name": product.name,
-                "category_slug": product.category_slug,
+                "brand": product.brand,
+                "subcategory_label": product.subcategory_label,
                 "quantity": line["quantity"],
                 "unit_price_cents": product.price_cents,
                 "line_total_cents": line["line_total_cents"],
@@ -412,14 +588,34 @@ def checkout_finalize():
     discount_cents = subtotal_cents
     total_cents = 0
 
+    user.full_name = form_data["recipient_name"]
+    user.phone = form_data["contact_phone"] or user.phone
+    user.zip_code = form_data["zip_code"]
+    user.street = form_data["street"]
+    user.number = form_data["number"]
+    user.complement = form_data["complement"] or None
+    user.neighborhood = form_data["neighborhood"]
+    user.city = form_data["city"]
+    user.state = form_data["state"]
+
     occurrence = Occurrence(
         status="Novo",
         mapped_category=mapped_category,
         urgency_level=highest_urgency,
         user_id=user.id,
-        contact_phone=contact_phone,
-        contact_email=contact_email,
-        observation=observation,
+        recipient_name=form_data["recipient_name"],
+        contact_phone=form_data["contact_phone"] or None,
+        contact_email=form_data["contact_email"] or None,
+        address_zip_code=form_data["zip_code"],
+        address_street=form_data["street"],
+        address_number=form_data["number"],
+        address_complement=form_data["complement"] or None,
+        address_neighborhood=form_data["neighborhood"],
+        address_city=form_data["city"],
+        address_state=form_data["state"],
+        delivery_window=form_data["delivery_window"] or None,
+        delivery_notes=form_data["delivery_notes"] or None,
+        observation=form_data["observation"] or None,
         subtotal_cents=subtotal_cents,
         discount_cents=discount_cents,
         total_cents=total_cents,
@@ -439,7 +635,7 @@ def checkout_finalize():
     db.session.commit()
 
     _save_cart({})
-    flash("Pedido finalizado com sucesso. Protocolo registrado.", "success")
+    flash("Pedido finalizado com sucesso.", "success")
     return redirect(url_for("store.checkout_success_page", occurrence_id=occurrence.id))
 
 

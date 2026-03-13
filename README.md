@@ -17,18 +17,26 @@ Prototipo web em Flask com fachada de e-commerce para registro discreto de ocorr
   - Produtos com busca/filtro (`/produtos`)
   - Categorias (`/kits`, `/skincare`, `/maquiagem`)
   - Detalhe de produto (`/produto/<slug>`)
+  - Catalogo seed com 20+ produtos inspirados em marcas reais de beleza
   - Carrinho (`/carrinho`)
-  - Checkout (`/checkout`) com cupom automatico de 100%
+  - Checkout (`/checkout`) com endereco, instrucoes de entrega e cupom automatico de 100%
 - Login da usuaria e acompanhamento:
   - Cadastro (`/cadastro`)
   - Login (`/login`)
   - Meus pedidos (`/meus-pedidos`)
   - Detalhe do pedido (`/meus-pedidos/<id>`)
+  - Persistencia de dados de entrega para proximos pedidos
 - Painel admin:
   - Login (`/admin/login`)
   - Ocorrencias (`/admin/ocorrencias`)
   - Triagem/status/notas
   - Mapeamento produto -> categoria/urgencia
+
+## Diferenciais do fluxo
+
+- Fachada publica tratada como e-commerce de beleza, sem expor metadados sensiveis para a usuaria final
+- Snapshot de endereco, contato e instrucoes de entrega salvo em cada protocolo
+- Painel administrativo com dados completos de triagem, historico e mensagens
 
 ## Executar localmente
 

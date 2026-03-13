@@ -5,11 +5,11 @@
 {% block content %}
 <section class="auth-page">
     <form class="auth-card" action="{{ url_for('user.login_page', next=request.args.get('next', '')) }}" method="post">
-        <h1>Login da usuaria</h1>
-        <p>Entre para acompanhar seus pedidos e o status da solicitacao.</p>
+        <h1>Entrar na conta</h1>
+        <p>Acompanhe pedidos, atualizacoes e dados de entrega da sua conta.</p>
 
         <label for="login">Usuario ou email</label>
-        <input id="login" name="login" type="text" required>
+        <input id="login" name="login" type="text" value="{{ request.form.get('login', '') }}" required>
 
         <label for="password">Senha</label>
         <input id="password" name="password" type="password" required>
@@ -17,7 +17,7 @@
         <button class="buy-button" type="submit">Entrar</button>
         <p class="auth-secondary-link">
             Nao tem conta?
-            <a href="{{ url_for('user.register_page') }}">Criar cadastro</a>
+            <a href="{{ url_for('user.register_page') }}">Criar conta</a>
         </p>
     </form>
 </section>

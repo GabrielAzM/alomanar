@@ -9,12 +9,28 @@
             <img src="{{ url_for('static', filename='img/' ~ product.image_filename) }}" alt="{{ product.name }}">
         </div>
         <div class="product-detail-info">
+            <p class="product-detail-brand">{{ product.brand }}</p>
             <h1>{{ product.name }}</h1>
+            <div class="product-detail-tags">
+                <span>{{ product.subcategory_label }}</span>
+                {% if product.badge_label %}<span>{{ product.badge_label }}</span>{% endif %}
+                {% if product.shade_label %}<span>{{ product.shade_label }}</span>{% endif %}
+                {% if product.size_label %}<span>{{ product.size_label }}</span>{% endif %}
+            </div>
+            <p class="product-detail-rating">{{ product.rating }} / 5 com {{ product.review_count }} avaliacoes</p>
             <p class="product-detail-price">{{ product.price_cents | brl }} <span>ou 2x de {{ (product.price_cents // 2) | brl }}</span></p>
             <p class="product-detail-description">{{ product.description_long }}</p>
 
+            {% if product.get_highlights() %}
+                <ul class="product-highlight-list">
+                    {% for highlight in product.get_highlights() %}
+                        <li>{{ highlight }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
             <div class="product-detail-cta-box">
-                <p class="product-detail-cta-note">Selecione quantidade e adicione ao carrinho.</p>
+                <p class="product-detail-cta-note">Selecione a quantidade e adicione ao carrinho para concluir com o cupom de lancamento.</p>
                 <form class="add-to-cart-form" action="{{ url_for('store.add_cart_item') }}" method="post">
                     <input type="hidden" name="product_id" value="{{ product.id }}">
                     <input type="hidden" name="next" value="{{ request.path }}">
@@ -39,14 +55,16 @@
                             <img src="{{ url_for('static', filename='img/' ~ related.image_filename) }}" alt="{{ related.name }}" class="product-image">
                         </a>
                         <div class="product-info">
+                            <p class="product-brand">{{ related.brand }}{% if related.badge_label %} <span>{{ related.badge_label }}</span>{% endif %}</p>
                             <h3 class="product-title">
                                 <a href="{{ url_for('store.product_detail_page', slug=related.slug) }}" class="product-link">{{ related.name }}</a>
                             </h3>
                             <p class="product-description">{{ related.description_short }}</p>
+                            <p class="product-meta-line">{{ related.subcategory_label }}{% if related.size_label %} | {{ related.size_label }}{% endif %}</p>
                             <div class="product-footer">
                                 <div class="price-box">
                                     <span class="price-value">{{ related.price_cents | brl }}</span>
-                                    <span class="price-installments">ou em 2x de {{ (related.price_cents // 2) | brl }}</span>
+                                    <span class="price-installments">{{ related.rating }} / 5 com {{ related.review_count }} avaliacoes</span>
                                 </div>
                                 <form action="{{ url_for('store.add_cart_item') }}" method="post">
                                     <input type="hidden" name="product_id" value="{{ related.id }}">

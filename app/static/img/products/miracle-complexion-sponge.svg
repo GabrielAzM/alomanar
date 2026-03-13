@@ -1,0 +1,29 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900' viewBox='0 0 480 480' role='img' aria-labelledby='title desc'>
+<title>Esponja Miracle Complexion</title>
+<desc>Packshot em fundo de estudio para o produto Esponja Miracle Complexion.</desc>
+<defs>
+  <linearGradient id='bg' x1='0%' y1='0%' x2='0%' y2='100%'>
+    <stop offset='0%' stop-color='#fffaf4'/>
+    <stop offset='100%' stop-color='#ffffff'/>
+  </linearGradient>
+  <linearGradient id='packBody' x1='0%' y1='0%' x2='100%' y2='100%'>
+    <stop offset='0%' stop-color='#b8864b'/>
+    <stop offset='100%' stop-color='#87bd5e'/>
+  </linearGradient>
+  <filter id='shadow' x='-50%' y='-50%' width='200%' height='220%'>
+    <feDropShadow dx='0' dy='18' stdDeviation='16' flood-color='#1f1017' flood-opacity='0.22'/>
+  </filter>
+  <filter id='blur'><feGaussianBlur stdDeviation='12'/></filter>
+</defs>
+<rect width='480' height='480' fill='url(#bg)'/>
+<ellipse cx='240' cy='416' rx='128' ry='24' fill='#ceb8be' opacity='0.38' filter='url(#blur)'/>
+<circle cx='110' cy='90' r='66' fill='#f0dfc7' opacity='0.55'/>
+<circle cx='382' cy='124' r='44' fill='#e8d1b1' opacity='0.5'/>
+<rect x='70' y='36' width='340' height='408' rx='42' fill='rgba(255,255,255,0.56)' stroke='rgba(122, 30, 58, 0.05)'/>
+
+        <g filter='url(#shadow)'>
+          <path d='M240 112C306 170 324 266 274 360C246 412 190 420 156 368C112 300 140 184 240 112Z' fill='url(#packBody)'/>
+          <ellipse cx='226' cy='282' rx='44' ry='70' fill='rgba(255,255,255,0.22)'/>
+        </g>
+        
+</svg>

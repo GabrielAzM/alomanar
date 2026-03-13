@@ -18,7 +18,7 @@
     </div>
 
     <form class="admin-filter-form" method="get" action="{{ url_for('admin.occurrences_page') }}">
-        <input type="text" name="q" value="{{ search_term }}" placeholder="Buscar por protocolo, categoria ou contato">
+        <input type="text" name="q" value="{{ search_term }}" placeholder="Buscar por protocolo, categoria, recebimento ou contato">
         <select name="status">
             <option value="">Todos os status</option>
             {% for status in statuses %}

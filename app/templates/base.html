@@ -38,37 +38,37 @@
             <div class="header-actions">
                 <div class="header-auth-links">
                     {% if current_user %}
-                        <span class="header-user-badge">{{ current_user.username }}</span>
-                        <a class="header-inline-link" href="{{ url_for('user.orders_page') }}">Meus pedidos</a>
+                        <span class="header-user-badge">{{ current_user.full_name or current_user.username }}</span>
+                        <a class="header-inline-link" href="{{ url_for('user.orders_page') }}">Minha conta</a>
                         <form action="{{ url_for('user.logout') }}" method="post">
                             <button class="header-inline-button" type="submit">Sair</button>
                         </form>
                     {% else %}
-                        <a class="header-inline-link" href="{{ url_for('user.login_page') }}">Login usuaria</a>
-                        <a class="header-inline-link" href="{{ url_for('user.register_page') }}">Cadastro</a>
-                    {% endif %}
-
-                    {% if current_admin %}
-                        <a class="header-inline-link admin-link" href="{{ url_for('admin.occurrences_page') }}">Painel admin</a>
-                    {% else %}
-                        <a class="header-inline-link admin-link" href="{{ url_for('admin.login_page') }}">Login admin</a>
+                        <a class="header-inline-link" href="{{ url_for('user.login_page') }}">Entrar</a>
+                        <a class="header-inline-link" href="{{ url_for('user.register_page') }}">Criar conta</a>
                     {% endif %}
                 </div>
 
                 <div class="dark-mode-wrapper">
                     <label class="switch" aria-label="Alternar tema">
-                        <input type="checkbox" id="dark-mode-toggle">
+                        <input
+                            type="checkbox"
+                            id="dark-mode-toggle"
+                            data-exit-url="{{ url_for('store.quick_exit') }}"
+                        >
                         <span class="slider"></span>
                     </label>
-                    <span class="dark-mode-text">Dark-Mode</span>
+                    <span class="dark-mode-text">Dark Mode</span>
                 </div>
-                <a href="{{ url_for('store.cart_page') }}" class="cart-link" aria-label="Carrinho">
+
+                <a href="{{ url_for('store.cart_page') }}" class="cart-link" aria-label="Abrir carrinho" data-cart-trigger>
                     <svg viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg" class="icon-cart">
                         <path
                             d="M16 53.33c-1.47 0-2.72-.52-3.77-1.57-1.04-1.04-1.56-2.3-1.56-3.76s.52-2.72 1.56-3.77c1.05-1.04 2.3-1.57 3.77-1.57s2.72.53 3.77 1.57c1.04 1.05 1.56 2.3 1.56 3.77s-.52 2.72-1.56 3.77c-1.05 1.05-2.3 1.57-3.77 1.57zm26.67 0c-1.47 0-2.72-.52-3.77-1.57-1.04-1.04-1.56-2.3-1.56-3.76s.52-2.72 1.56-3.77c1.05-1.04 2.3-1.57 3.77-1.57s2.72.53 3.77 1.57c1.04 1.05 1.56 2.3 1.56 3.77s-.52 2.72-1.56 3.77c-1.05 1.05-2.3 1.57-3.77 1.57zM13.73 10.67l6.4 13.33H38.8l7.33-13.33H13.73zM11.2 5.33h39.33c1.03 0 1.8.46 2.34 1.37.53.9.55 1.83.06 2.76l-9.46 17.07c-.49.89-1.15 1.58-1.97 2.07-.82.49-1.72.73-2.7.73H18.93l-2.93 5.34H48V40H16c-2 0-3.51-.88-4.53-2.63-1.02-1.76-1.07-3.5-.13-5.24l3.6-6.53L5.33 5.33H0V0h8.67l2.53 5.33z"
                             fill="currentColor"
                         />
                     </svg>
+                    <span class="cart-link-label">Sacola</span>
                     {% if cart_items_count > 0 %}
                         <span class="cart-badge">{{ cart_items_count }}</span>
                     {% endif %}
@@ -101,25 +101,107 @@
         {% block content %}{% endblock %}
     </main>
 
+    <div class="cart-drawer-backdrop" hidden data-cart-close></div>
+    <aside class="cart-drawer" id="cart-drawer" aria-hidden="true">
+        <div class="cart-drawer-header">
+            <div>
+                <p class="cart-drawer-eyebrow">Resumo rapido</p>
+                <h2>Sua sacola</h2>
+            </div>
+            <button class="cart-drawer-close" type="button" aria-label="Fechar carrinho" data-cart-close>&times;</button>
+        </div>
+
+        {% if cart_preview_lines %}
+            <div class="cart-drawer-body">
+                {% for line in cart_preview_lines %}
+                    <article class="cart-drawer-item">
+                        <img src="{{ url_for('static', filename='img/' ~ line.product.image_filename) }}" alt="{{ line.product.name }}">
+                        <div class="cart-drawer-item-info">
+                            <p class="product-brand">{{ line.product.brand }}</p>
+                            <h3>{{ line.product.name }}</h3>
+                            <p>{{ line.product.subcategory_label }}</p>
+                            <strong>{{ line.line_total_cents | brl }}</strong>
+                            <div class="cart-drawer-item-actions">
+                                <div class="drawer-qty-controls">
+                                    <form action="{{ url_for('store.update_cart_item', item_id=line.product.id) }}" method="post">
+                                        <input type="hidden" name="next" value="{{ request.full_path }}">
+                                        <input type="hidden" name="action" value="dec">
+                                        <button type="submit" aria-label="Diminuir quantidade">-</button>
+                                    </form>
+                                    <span>{{ line.quantity }}</span>
+                                    <form action="{{ url_for('store.update_cart_item', item_id=line.product.id) }}" method="post">
+                                        <input type="hidden" name="next" value="{{ request.full_path }}">
+                                        <input type="hidden" name="action" value="inc">
+                                        <button type="submit" aria-label="Aumentar quantidade">+</button>
+                                    </form>
+                                </div>
+                                <form action="{{ url_for('store.remove_cart_item', item_id=line.product.id) }}" method="post">
+                                    <input type="hidden" name="next" value="{{ request.full_path }}">
+                                    <button class="link-button" type="submit">Remover</button>
+                                </form>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+            <div class="cart-drawer-footer">
+                <p><span>Subtotal</span> <strong>{{ cart_subtotal_cents | brl }}</strong></p>
+                <p class="cart-summary-hint">Cupom promocional aplicado no checkout.</p>
+                <div class="cart-drawer-footer-actions">
+                    <a class="buy-button secondary-btn" href="{{ url_for('store.cart_page') }}">Abrir carrinho</a>
+                    <a class="buy-button" href="{{ url_for('store.checkout_page') }}">Checkout</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="cart-drawer-empty">
+                <p>Sua sacola esta vazia no momento.</p>
+                <a class="buy-button" href="{{ url_for('store.products_page') }}">Explorar produtos</a>
+            </div>
+        {% endif %}
+    </aside>
+
     <footer class="main-footer">
-        <div class="footer-grid">
-            <div class="footer-logo">
-                <div class="institution-placeholder">Informacao omitida e anonimizada para avaliacao.</div>
+        <div class="footer-grid footer-grid-expanded">
+            <div class="footer-column footer-brand-column">
+                <img class="footer-logo-image" src="{{ url_for('static', filename='img/logo-alomana.png') }}" alt="Alo!Mana?">
+                <p class="footer-brand-copy">Loja conceito de beleza com catalogo curado, checkout agil e acompanhamento digital dos pedidos.</p>
             </div>
 
-            <div class="footer-info">
-                <p class="copyright">&copy; 2026 - Alo!Mana?<br>Projeto academico</p>
-                <p class="instituicao">Instituicao parceira (informacao omitida e anonimizada para avaliacao).</p>
-                <p class="footer-admin-link">
-                    {% if current_admin %}
-                        <a href="{{ url_for('admin.occurrences_page') }}">Area administrativa</a>
+            <div class="footer-column">
+                <h3>Navegue</h3>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('store.products_page') }}">Todos os produtos</a></li>
+                    <li><a href="{{ url_for('store.maquiagem_page') }}">Maquiagem</a></li>
+                    <li><a href="{{ url_for('store.skincare_page') }}">Skincare</a></li>
+                    <li><a href="{{ url_for('store.kits_page') }}">Kits e acessorios</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Conta</h3>
+                <ul class="footer-links">
+                    {% if current_user %}
+                        <li><a href="{{ url_for('user.orders_page') }}">Minha conta</a></li>
                     {% else %}
-                        <a href="{{ url_for('admin.login_page') }}">Area administrativa</a>
+                        <li><a href="{{ url_for('user.login_page') }}">Entrar</a></li>
+                        <li><a href="{{ url_for('user.register_page') }}">Criar conta</a></li>
                     {% endif %}
-                </p>
+                    <li><a href="{{ url_for('store.institutional_page') }}">Institucional</a></li>
+                    <li>
+                        {% if current_admin %}
+                            <a href="{{ url_for('admin.occurrences_page') }}">Painel interno</a>
+                        {% else %}
+                            <a href="{{ url_for('admin.login_page') }}">Acesso interno</a>
+                        {% endif %}
+                    </li>
+                </ul>
             </div>
 
-            <div class="footer-spacer"></div>
+            <div class="footer-column footer-meta-column">
+                <h3>Projeto</h3>
+                <p class="copyright">&copy; 2026 - Alo!Mana? Beauty Store</p>
+                <p class="instituicao">Dados institucionais e contatos comerciais anonimizados para avaliacao desta versao.</p>
+            </div>
         </div>
     </footer>
 

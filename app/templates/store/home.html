@@ -43,8 +43,8 @@
 
 <section class="favorite-container">
     <div class="title-container">
-        <h1 class="h1-title">Clientes</h1>
-        <h2 class="h2-subtitle">Favoritos dos</h2>
+        <h1 class="h1-title">Destaques</h1>
+        <h2 class="h2-subtitle">Favoritos da semana</h2>
     </div>
 
     <div class="products-grid">
@@ -54,8 +54,10 @@
                     <img src="{{ url_for('static', filename='img/' ~ product.image_filename) }}" alt="{{ product.name }}" class="product-image">
                 </a>
                 <div class="product-info">
+                    <p class="product-brand">{{ product.brand }}{% if product.badge_label %} <span>{{ product.badge_label }}</span>{% endif %}</p>
                     <h3 class="product-title">{{ product.name }}</h3>
                     <p class="product-description">{{ product.description_short }}</p>
+                    <p class="product-meta-line">{{ product.subcategory_label }}{% if product.size_label %} | {{ product.size_label }}{% endif %} | {{ product.rating }} / 5</p>
                     <div class="product-footer">
                         <div class="price-box">
                             <span class="price-value">{{ product.price_cents | brl }}</span>
@@ -69,6 +71,21 @@
                         </form>
                     </div>
                 </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="store-benefits">
+    <div class="title-container">
+        <h1 class="h1-title">Experiencia</h1>
+        <h2 class="h2-subtitle">Por que comprar aqui</h2>
+    </div>
+    <div class="benefits-grid">
+        {% for benefit in home_benefits %}
+            <article class="benefit-card">
+                <h3>{{ benefit.title }}</h3>
+                <p>{{ benefit.text }}</p>
             </article>
         {% endfor %}
     </div>

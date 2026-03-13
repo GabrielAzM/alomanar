@@ -43,10 +43,16 @@ def register_page():
         return redirect(url_for("user.orders_page"))
 
     if request.method == "POST":
+        full_name = (request.form.get("full_name") or "").strip()
         username = (request.form.get("username") or "").strip()
         email = (request.form.get("email") or "").strip().lower()
+        phone = (request.form.get("phone") or "").strip()
         password = request.form.get("password") or ""
         confirm_password = request.form.get("confirm_password") or ""
+
+        if len(full_name) < 5:
+            flash("Informe seu nome completo.", "error")
+            return render_template("store/register.html", active_nav="cadastro")
 
         if len(username) < 3:
             flash("Informe um usuario com pelo menos 3 caracteres.", "error")
@@ -72,7 +78,7 @@ def register_page():
             flash("Este email ja esta cadastrado.", "error")
             return render_template("store/register.html", active_nav="cadastro")
 
-        user = User(username=username, email=email)
+        user = User(username=username, email=email, full_name=full_name, phone=phone or None)
         user.set_password(password)
         db.session.add(user)
         db.session.commit()
@@ -131,6 +137,7 @@ def orders_page():
     return render_template(
         "store/orders.html",
         orders=orders,
+        user=g.user,
         active_nav="pedidos",
     )
 
@@ -166,5 +173,5 @@ def order_add_message(occurrence_id):
     )
     db.session.add(message)
     db.session.commit()
-    flash("Mensagem enviada para a equipe de triagem.", "success")
+    flash("Mensagem enviada para a equipe de atendimento.", "success")
     return redirect(url_for("user.order_detail_page", occurrence_id=order.id))

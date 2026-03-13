@@ -104,8 +104,11 @@ def occurrences_page():
             query = query.filter(
                 or_(
                     Occurrence.mapped_category.ilike(like_term),
+                    Occurrence.recipient_name.ilike(like_term),
                     Occurrence.contact_phone.ilike(like_term),
                     Occurrence.contact_email.ilike(like_term),
+                    Occurrence.address_street.ilike(like_term),
+                    Occurrence.address_city.ilike(like_term),
                     Occurrence.observation.ilike(like_term),
                     User.username.ilike(like_term),
                     User.email.ilike(like_term),

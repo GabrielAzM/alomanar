@@ -5,14 +5,20 @@
 {% block content %}
 <section class="auth-page">
     <form class="auth-card" action="{{ url_for('user.register_page') }}" method="post">
-        <h1>Cadastro da usuaria</h1>
-        <p>Crie uma conta para registrar e acompanhar cada pedido.</p>
+        <h1>Crie sua conta</h1>
+        <p>Monte sua conta para salvar entregas e acompanhar cada pedido.</p>
+
+        <label for="full_name">Nome completo</label>
+        <input id="full_name" name="full_name" type="text" value="{{ request.form.get('full_name', '') }}" required>
 
         <label for="username">Usuario</label>
-        <input id="username" name="username" type="text" minlength="3" required>
+        <input id="username" name="username" type="text" minlength="3" value="{{ request.form.get('username', '') }}" required>
 
         <label for="email">Email</label>
-        <input id="email" name="email" type="email" required>
+        <input id="email" name="email" type="email" value="{{ request.form.get('email', '') }}" required>
+
+        <label for="phone">Telefone (opcional)</label>
+        <input id="phone" name="phone" type="text" value="{{ request.form.get('phone', '') }}">
 
         <label for="password">Senha</label>
         <input id="password" name="password" type="password" minlength="6" required>
@@ -23,7 +29,7 @@
         <button class="buy-button" type="submit">Criar conta</button>
         <p class="auth-secondary-link">
             Ja possui conta?
-            <a href="{{ url_for('user.login_page') }}">Fazer login</a>
+            <a href="{{ url_for('user.login_page') }}">Entrar</a>
         </p>
     </form>
 </section>

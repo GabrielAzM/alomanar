@@ -31,9 +31,13 @@ def list_products():
             "id": product.id,
             "slug": product.slug,
             "name": product.name,
+            "brand": product.brand,
             "category": product.category_slug,
+            "subcategory": product.subcategory_label,
             "price_cents": product.price_cents,
             "image": product.image_filename,
+            "rating": product.rating,
+            "review_count": product.review_count,
         }
         for product in products
     ]

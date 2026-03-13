@@ -12,19 +12,70 @@
     <div class="checkout-layout">
         <form class="checkout-form" action="{{ url_for('store.checkout_finalize') }}" method="post">
             <h3>Conta conectada</h3>
-            <p class="checkout-help-text">Pedido vinculado a: <strong>{{ user.username }}</strong> ({{ user.email }})</p>
+            <p class="checkout-help-text">Pedido vinculado a: <strong>{{ user.full_name or user.username }}</strong> ({{ user.email }})</p>
 
-            <h3>Contato opcional</h3>
-            <p class="checkout-help-text">Preencha somente se quiser retorno da equipe responsavel.</p>
+            <h3>Entrega</h3>
+            <p class="checkout-help-text">Os dados abaixo ficam salvos para agilizar seus proximos pedidos.</p>
 
-            <label for="contact_phone">Telefone (opcional)</label>
-            <input id="contact_phone" name="contact_phone" type="text" placeholder="(00) 00000-0000">
+            <div class="form-grid two-columns">
+                <div>
+                    <label for="recipient_name">Nome de recebimento</label>
+                    <input id="recipient_name" name="recipient_name" type="text" value="{{ checkout_data.recipient_name }}" required>
+                </div>
+                <div>
+                    <label for="contact_phone">Telefone</label>
+                    <input id="contact_phone" name="contact_phone" type="text" placeholder="(00) 00000-0000" value="{{ checkout_data.contact_phone }}">
+                </div>
+            </div>
 
-            <label for="contact_email">Email (opcional)</label>
-            <input id="contact_email" name="contact_email" type="email" placeholder="seuemail@exemplo.com" value="{{ user.email }}">
+            <div class="form-grid two-columns">
+                <div>
+                    <label for="contact_email">Email para contato</label>
+                    <input id="contact_email" name="contact_email" type="email" placeholder="seuemail@exemplo.com" value="{{ checkout_data.contact_email }}">
+                </div>
+                <div>
+                    <label for="zip_code">CEP</label>
+                    <input id="zip_code" name="zip_code" type="text" placeholder="00000-000" value="{{ checkout_data.zip_code }}" required>
+                </div>
+            </div>
 
-            <label for="observation">Observacao (opcional)</label>
-            <textarea id="observation" name="observation" rows="5" placeholder="Escreva apenas o essencial para triagem."></textarea>
+            <div class="form-grid two-columns">
+                <div>
+                    <label for="street">Rua</label>
+                    <input id="street" name="street" type="text" value="{{ checkout_data.street }}" required>
+                </div>
+                <div>
+                    <label for="number">Numero</label>
+                    <input id="number" name="number" type="text" value="{{ checkout_data.number }}" required>
+                </div>
+            </div>
+
+            <label for="complement">Complemento (opcional)</label>
+            <input id="complement" name="complement" type="text" value="{{ checkout_data.complement }}">
+
+            <div class="form-grid three-columns">
+                <div>
+                    <label for="neighborhood">Bairro</label>
+                    <input id="neighborhood" name="neighborhood" type="text" value="{{ checkout_data.neighborhood }}" required>
+                </div>
+                <div>
+                    <label for="city">Cidade</label>
+                    <input id="city" name="city" type="text" value="{{ checkout_data.city }}" required>
+                </div>
+                <div>
+                    <label for="state">UF</label>
+                    <input id="state" name="state" type="text" maxlength="2" value="{{ checkout_data.state }}" required>
+                </div>
+            </div>
+
+            <label for="delivery_window">Melhor horario para receber (opcional)</label>
+            <input id="delivery_window" name="delivery_window" type="text" placeholder="Ex.: comercial, apos 18h, sabado pela manha" value="{{ checkout_data.delivery_window }}">
+
+            <label for="delivery_notes">Instrucoes de entrega (opcional)</label>
+            <textarea id="delivery_notes" name="delivery_notes" rows="3" placeholder="Ex.: portaria, referencia ou observacao rapida.">{{ checkout_data.delivery_notes }}</textarea>
+
+            <label for="observation">Observacao do pedido (opcional)</label>
+            <textarea id="observation" name="observation" rows="5" placeholder="Escreva o essencial sobre seu pedido.">{{ checkout_data.observation }}</textarea>
 
             <button class="buy-button checkout-submit" type="submit">Finalizar pedido</button>
         </form>
@@ -44,7 +95,7 @@
                 <p><span>Cupom {{ auto_coupon_code }}:</span> <strong>-{{ discount_cents | brl }}</strong></p>
                 <p class="checkout-final-total"><span>Total:</span> <strong>{{ total_cents | brl }}</strong></p>
             </div>
-            <p class="coupon-note">Cupom de 100% aplicado automaticamente para impedir cobranca.</p>
+            <p class="coupon-note">Campanha de lancamento aplicada automaticamente neste pedido.</p>
         </aside>
     </div>
 </section>
