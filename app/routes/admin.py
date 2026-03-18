@@ -123,7 +123,7 @@ def login_page():
                 return redirect(next_path)
             return redirect(url_for("admin.occurrences_page"))
 
-        flash("Usuario ou senha invalidos.", "error")
+        flash("Usuário ou senha inválidos.", "error")
 
     return render_template("admin/login.html", active_nav="admin-login")
 
@@ -132,7 +132,7 @@ def login_page():
 def logout():
     session.pop(ADMIN_SESSION_KEY, None)
     session.modified = True
-    flash("Sessao encerrada.", "success")
+    flash("Sessão encerrada.", "success")
     return redirect(url_for("admin.login_page"))
 
 
@@ -265,7 +265,7 @@ def occurrence_status_update(occurrence_id):
     occurrence = Occurrence.query.get_or_404(occurrence_id)
     new_status = (request.form.get("status") or "").strip()
     if new_status not in VALID_OCCURRENCE_STATUSES:
-        flash("Status invalido.", "error")
+        flash("Status inválido.", "error")
         return redirect(url_for("admin.occurrence_detail_page", occurrence_id=occurrence_id))
 
     if occurrence.status != new_status:
@@ -283,7 +283,7 @@ def occurrence_status_update(occurrence_id):
         db.session.commit()
         flash("Status atualizado.", "success")
     else:
-        flash("Status mantido sem alteracoes.", "warning")
+        flash("Status mantido sem alterações.", "warning")
 
     return redirect(url_for("admin.occurrence_detail_page", occurrence_id=occurrence_id))
 
@@ -294,7 +294,7 @@ def occurrence_add_note(occurrence_id):
     occurrence = Occurrence.query.get_or_404(occurrence_id)
     note_text = (request.form.get("note_text") or "").strip()
     if not note_text:
-        flash("A nota nao pode ser vazia.", "error")
+        flash("A nota não pode ser vazia.", "error")
         return redirect(url_for("admin.occurrence_detail_page", occurrence_id=occurrence.id))
 
     note = OccurrenceNote(
@@ -317,7 +317,7 @@ def mappings_page():
         urgency_level = (request.form.get("urgency_level") or "").strip()
 
         if not product_id or not occurrence_category:
-            flash("Produto e categoria sao obrigatorios.", "error")
+            flash("Produto e categoria são obrigatórios.", "error")
             return redirect(url_for("admin.mappings_page"))
 
         if urgency_level not in VALID_URGENCY_LEVELS:
@@ -325,7 +325,7 @@ def mappings_page():
 
         product = db.session.get(Product, product_id)
         if not product:
-            flash("Produto nao encontrado.", "error")
+            flash("Produto não encontrado.", "error")
             return redirect(url_for("admin.mappings_page"))
 
         mapping = OccurrenceMapping.query.filter_by(product_id=product.id).first()

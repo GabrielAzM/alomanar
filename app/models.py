@@ -8,9 +8,9 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 db = SQLAlchemy()
 
-VALID_URGENCY_LEVELS = ("Baixa", "Media", "Alta", "Critica")
-VALID_OCCURRENCE_STATUSES = ("Novo", "Em triagem", "Encaminhado", "Concluido")
-URGENCY_SCORE = {"Baixa": 1, "Media": 2, "Alta": 3, "Critica": 4}
+VALID_URGENCY_LEVELS = ("Baixa", "Média", "Alta", "Crítica")
+VALID_OCCURRENCE_STATUSES = ("Novo", "Em triagem", "Encaminhado", "Concluído")
+URGENCY_SCORE = {"Baixa": 1, "Média": 2, "Alta": 3, "Crítica": 4}
 
 
 class Product(db.Model):
@@ -335,8 +335,8 @@ DEFAULT_PRODUCTS = [
         price_cents=11900,
         description_short="Base de cobertura media com acabamento natural e longa duracao.",
         description_long=(
-            "Formula leve que uniformiza a pele, segura bem ao longo do dia e entrega "
-            "acabamento confortavel para rotina, eventos e maquiagem social."
+            "Fórmula leve que uniformiza a pele, segura bem ao longo do dia e entrega "
+            "acabamento confortável para rotina, eventos e maquiagem social."
         ),
         image_filename="img-produtos-base-alomana.jpg",
         featured_order=1,
@@ -345,7 +345,7 @@ DEFAULT_PRODUCTS = [
         size_label="30 ml",
         rating=4.8,
         review_count=312,
-        highlights=["Cobertura media", "Acabamento natural", "Longa duracao"],
+        highlights=["Cobertura média", "Acabamento natural", "Longa duração"],
     ),
     _product_payload(
         slug="best-skin-ever-foundation",
@@ -377,10 +377,10 @@ DEFAULT_PRODUCTS = [
         category_label="Maquiagem",
         subcategory_label="Base",
         price_cents=6990,
-        description_short="Base glow com hidratacao e cobertura leve a media.",
+        description_short="Base glow com hidratação e cobertura leve a média.",
         description_long=(
-            "Entrega luminosidade elegante, boa aderencia e sensacao confortavel para "
-            "quem busca viro saudavel e acabamento de pele bem cuidada."
+            "Entrega luminosidade elegante, boa aderência e sensação confortável para "
+            "quem busca víro saudável e acabamento de pele bem cuidada."
         ),
         image_filename="img-produtos-base-alomana.jpg",
         featured_order=3,
@@ -443,7 +443,7 @@ DEFAULT_PRODUCTS = [
         category_label="Maquiagem",
         subcategory_label="Blush",
         price_cents=14900,
-        description_short="Blush liquido pigmentado com acabamento fresco e facil de esfumar.",
+        description_short="Blush liquido pigmentado com acabamento fresco e fácil de esfumar.",
         description_long=(
             "Bastam poucos pontos para um efeito corado elegante. A textura liquida "
             "espalha bem e permite desde um rubor suave ate um look mais marcante."
@@ -455,17 +455,17 @@ DEFAULT_PRODUCTS = [
         size_label="3.2 ml",
         rating=4.9,
         review_count=432,
-        highlights=["Alta pigmentacao", "Esfuma facil", "Acabamento natural"],
+        highlights=["Alta pigmentação", "Esfuma fácil", "Acabamento natural"],
     ),
     _product_payload(
         slug="soft-pinch-luminous-powder-blush",
-        name="Blush em Po Soft Pinch Luminous",
+        name="Blush em Pó Soft Pinch Luminous",
         brand="Rare Beauty",
         category_slug="maquiagem",
         category_label="Maquiagem",
-        subcategory_label="Blush em po",
+        subcategory_label="Blush em pó",
         price_cents=19900,
-        description_short="Blush em po com brilho sutil e acabamento aveludado.",
+        description_short="Blush em pó com brilho sutil e acabamento aveludado.",,
         description_long=(
             "Combina cor uniforme com luminosidade delicada para valorizar a pele sem "
             "pesar. Boa escolha para makes sociais e acabamento sofisticado."
@@ -487,7 +487,7 @@ DEFAULT_PRODUCTS = [
         category_label="Maquiagem",
         subcategory_label="Contorno",
         price_cents=17900,
-        description_short="Contorno liquido de facil espalhabilidade e acabamento natural.",
+        description_short="Contorno líquido de fácil espalabilidade e acabamento natural.",,
         description_long=(
             "Desenha o rosto com leveza e sem manchas, funcionando bem tanto com base "
             "leve quanto em peles mais preparadas para maquiagem completa."
@@ -499,7 +499,7 @@ DEFAULT_PRODUCTS = [
         size_label="11 ml",
         rating=4.7,
         review_count=164,
-        highlights=["Facil de esfumar", "Nao marca", "Acabamento leve"],
+        highlights=["Fácil de esfumar", "Não marca", "Acabamento leve"],
     ),
     _product_payload(
         slug="cream-lip-stain",
@@ -507,12 +507,12 @@ DEFAULT_PRODUCTS = [
         brand="Sephora Collection",
         category_slug="maquiagem",
         category_label="Maquiagem",
-        subcategory_label="Batom liquido",
+        subcategory_label="Batom líquido",
         price_cents=6900,
-        description_short="Batom liquido matte com cor intensa e longa duracao.",
+        description_short="Batom líquido matte com cor intensa e longa duração.",,
         description_long=(
-            "A cobertura aparece ja na primeira camada e seca com conforto. Ideal para "
-            "quem quer cor vibrante, boa duracao e acabamento uniforme."
+            "A cobertura aparece já na primeira camada e seca com conforto. Ideal para "
+            "quem quer cor vibrante, boa duração e acabamento uniforme."
         ),
         image_filename="img-produtos-alomana.jpg",
         featured_order=9,
@@ -521,7 +521,7 @@ DEFAULT_PRODUCTS = [
         size_label="5 ml",
         rating=4.7,
         review_count=574,
-        highlights=["Alta pigmentacao", "Viro matte", "Longa duracao"],
+        highlights=["Alta pigmentação", "Víro matte", "Longa duração"],
     ),
     _product_payload(
         slug="the-colossal-waterproof",
@@ -529,20 +529,20 @@ DEFAULT_PRODUCTS = [
         brand="Maybelline NY",
         category_slug="maquiagem",
         category_label="Maquiagem",
-        subcategory_label="Mascara de cilios",
+        subcategory_label="Máscara de cílios",
         price_cents=7990,
-        description_short="Mascara a prova d'agua para volume e definicao no dia a dia.",
+        description_short="Máscara à prova d'água para volume e definição no dia a dia.",
         description_long=(
-            "Escovinha encorpada que separa e entrega volume perceptivel com formula "
+            "Escovinha encorpada que separa e entrega volume perceptível com fórmula "
             "resistente a umidade, calor e rotina prolongada."
         ),
         image_filename="img-produtos-rimel-alomana.jpg",
         featured_order=10,
-        badge_label="A prova d'agua",
+        badge_label="À prova d'água",
         size_label="9.2 ml",
         rating=4.6,
         review_count=690,
-        highlights=["Volume", "Resistencia a agua", "Aplicacao uniforme"],
+        highlights=["Volume", "Resistência à água", "Aplicação uniforme"],
     ),
     _product_payload(
         slug="the-falsies-lash-lift",
@@ -573,10 +573,10 @@ DEFAULT_PRODUCTS = [
         category_label="Maquiagem",
         subcategory_label="Paleta de sombras",
         price_cents=28900,
-        description_short="Paleta neutra com acabamentos matte e cintilante para varias ocasioes.",
+        description_short="Paleta neutra com acabamentos matte e cintilante para várias ocações.",,
         description_long=(
             "Reune tons classicos para looks sutis, maquiagem de trabalho e producoes "
-            "mais elaboradas. Boa pigmentacao e combinacoes faceis de usar."
+            "mais elaboradas. Boa pigmentação e combinações fáceis de usar."
         ),
         image_filename="img-produtos-paletaDeSombra-alomana.jpg",
         featured_order=12,
@@ -584,7 +584,7 @@ DEFAULT_PRODUCTS = [
         size_label="17.1 g",
         rating=4.8,
         review_count=137,
-        highlights=["Tons versateis", "Matte e brilho", "Boa pigmentacao"],
+        highlights=["Tons versáteis", "Matte e brilho", "Boa pigmentação"],
     ),
     _product_payload(
         slug="photo-finish-smooth-blur-primer",
@@ -639,7 +639,7 @@ DEFAULT_PRODUCTS = [
         description_short="Spray fixador para prolongar a maquiagem por muitas horas.",
         description_long=(
             "Ajuda a manter a producao mais integra ao longo do dia e da noite, com "
-            "nevoa fina e sensacao leve depois da aplicacao."
+            "nevoa fina e sensação leve depois da aplicação."
         ),
         image_filename="img-produtos-alomana.jpg",
         featured_order=15,
@@ -647,7 +647,7 @@ DEFAULT_PRODUCTS = [
         size_label="118 ml",
         rating=4.8,
         review_count=286,
-        highlights=["Bruma fina", "Boa duracao", "Acabamento leve"],
+        highlights=["Bruma fina", "Boa duração", "Acabamento leve"],
     ),
     _product_payload(
         slug="lip-sleeping-mask",
@@ -655,11 +655,11 @@ DEFAULT_PRODUCTS = [
         brand="Laneige",
         category_slug="skincare",
         category_label="Skincare",
-        subcategory_label="Mascara labial",
+        subcategory_label="Máscara labial",
         price_cents=15900,
-        description_short="Tratamento noturno para labios macios, nutridos e com viro bonito.",
+        description_short="Tratamento noturno para lábios macios, nutridos e com víro bonito.",,
         description_long=(
-            "Textura rica e confortavel para usar antes de dormir ou como balm mais "
+            "Textura rica e confortável para usar antes de dormir ou como balm mais "
             "encorpado durante o dia. Ajuda a recuperar ressecamento rapidamente."
         ),
         image_filename="img-produtos-alomana.jpg",
@@ -669,7 +669,7 @@ DEFAULT_PRODUCTS = [
         size_label="20 g",
         rating=4.9,
         review_count=612,
-        highlights=["Nutre profundamente", "Maciez rapida", "Uso noturno"],
+        highlights=["Nutre profundamente", "Maciez rápida", "Uso noturno"],
     ),
     _product_payload(
         slug="total-cleansr-remove-it-all",
@@ -681,7 +681,7 @@ DEFAULT_PRODUCTS = [
         price_cents=19900,
         description_short="Gel cremoso de limpeza que remove impurezas e oleosidade.",
         description_long=(
-            "Limpa sem ressecar, deixa sensacao de pele fresca e prepara bem para as "
+            "Limpa sem ressecar, deixa sensação de pele fresca e prepara bem para as "
             "proximas etapas da rotina, da hidratacao ao protetor."
         ),
         image_filename="img-produtos-alomana.jpg",
@@ -702,7 +702,7 @@ DEFAULT_PRODUCTS = [
         price_cents=24900,
         description_short="Tonico hidratante com textura leve e viro luminoso.",
         description_long=(
-            "Combina esfoliacao suave com sensacao fresca e ajuda a deixar a pele mais "
+            "Combina esfoliação suave com sensação fresca e ajuda a deixar a pele mais "
             "uniforme, macia e preparada para receber os tratamentos seguintes."
         ),
         image_filename="img-produtos-alomana.jpg",
@@ -745,7 +745,7 @@ DEFAULT_PRODUCTS = [
         description_short="Bastao facial com protecao solar e brilho viroso.",
         description_long=(
             "Formato pratico para reaplicar ao longo do dia, com acabamento luminoso e "
-            "sensacao confortavel para usar por cima ou sem maquiagem."
+            "sensação confortável para usar por cima ou sem maquiagem."
         ),
         image_filename="img-produtos-alomana.jpg",
         featured_order=20,
@@ -786,7 +786,7 @@ DEFAULT_PRODUCTS = [
         price_cents=22900,
         description_short="Protetor facial leve com toque seco e boa aderencia.",
         description_long=(
-            "Ideal para pele mista a oleosa, com formula fluida que protege no dia a dia "
+            "Ideal para pele mista a oleosa, com fórmula fluida que protege no dia a dia "
             "e funciona bem antes da maquiagem."
         ),
         image_filename="img-produtos-alomana.jpg",
@@ -795,17 +795,17 @@ DEFAULT_PRODUCTS = [
         size_label="30 ml",
         rating=4.7,
         review_count=131,
-        highlights=["Protecao diaria", "Textura leve", "Boa aderencia"],
+        highlights=["Prote\u00e7\u00e3o di\u00e1ria", "Textura leve", "Boa ader\u00eancia"],
     ),
     _product_payload(
         slug="everyday-essentials-kit",
         name="Kit Everyday Essentials",
         brand="Real Techniques",
         category_slug="kits",
-        category_label="Kits e Acessorios",
-        subcategory_label="Kit de pinceis",
+        category_label="Kits e Acess\u00f3rios",
+        subcategory_label="Kit de pinc\u00e9is",
         price_cents=13900,
-        description_short="Kit com pinceis e esponja para uma necessaire pratica.",
+        description_short="Kit com pinc\u00e9is e esponja para uma necess\u00e1ire pr\u00e1tica.",
         description_long=(
             "Seleciona ferramentas coringa para pele e acabamento, com formato pensado "
             "para facilitar a rotina de quem quer montar um kit eficiente."
@@ -816,19 +816,19 @@ DEFAULT_PRODUCTS = [
         size_label="5 pecas",
         rating=4.8,
         review_count=226,
-        highlights=["Kit completo", "Uso diario", "Ferramentas versateis"],
+        highlights=["Kit completo", "Uso di\u00e1rio", "Ferramentas vers\u00e1teis"],
     ),
     _product_payload(
         slug="miracle-complexion-sponge",
         name="Esponja Miracle Complexion",
         brand="Real Techniques",
         category_slug="kits",
-        category_label="Kits e Acessorios",
+        category_label="Kits e Acessórios",
         subcategory_label="Esponja",
         price_cents=7900,
-        description_short="Esponja de maquiagem para acabamento polido e aplicacao uniforme.",
+        description_short="Esponja de maquiagem para acabamento polido e aplicação uniforme.",
         description_long=(
-            "O formato em varias faces ajuda na aplicacao de base, corretivo e contorno, "
+            "O formato em várias faces ajuda na aplicação de base, corretivo e contorno, "
             "criando acabamento bonito sem exigir muita habilidade."
         ),
         image_filename="img-produtos-alomana.jpg",

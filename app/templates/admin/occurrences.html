@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}MakeMana | Admin Ocorrencias{% endblock %}
+{% block title %}MakeMana | Admin Ocorrências{% endblock %}
 
 {% block content %}
 <section class="admin-page">
     <div class="admin-header">
         <div>
-            <h1>Ocorrencias registradas</h1>
-            <p>Usuario ativo: {{ admin_user.username }} | {{ result_count }} caso(s) visivel(is)</p>
+            <h1>Ocorrências registradas</h1>
+            <p>Usuario ativo: {{ admin_user.username }} | {{ result_count }} caso(s) visível(is)</p>
         </div>
         <div class="admin-header-actions">
             <a class="buy-button secondary-btn" href="{{ url_for('admin.mappings_page') }}">Mapeamentos</a>
@@ -26,7 +26,7 @@
             {% endfor %}
         </select>
         <select name="urgencia">
-            <option value="">Todas as urgencias</option>
+            <option value="">Todas as urgências</option>
             {% for urgency in urgency_levels %}
                 <option value="{{ urgency }}" {% if urgency_filter == urgency %}selected{% endif %}>{{ urgency }}</option>
             {% endfor %}
@@ -56,7 +56,7 @@
     </div>
 
     <p class="admin-results-meta">
-        Use os filtros para separar o que ainda esta em analise, o que ja foi encaminhado e os casos de maior urgencia.
+        Use os filtros para separar o que ainda está em análise, o que já foi encaminhado e os casos de maior urgência.
     </p>
 
     {% if occurrences %}
@@ -68,7 +68,7 @@
                         <th>Registro</th>
                         <th>Atualizado</th>
                         <th>Caso</th>
-                        <th>Urgencia</th>
+                        <th>Urgência</th>
                         <th>Status</th>
                         <th>Usuario</th>
                         <th></th>
@@ -109,7 +109,7 @@
             </table>
         </div>
     {% else %}
-        <p class="empty-state">Nenhuma ocorrencia encontrada para os filtros atuais.</p>
+        <p class="empty-state">Nenhuma ocorrência encontrada para os filtros atuais.</p>
     {% endif %}
 </section>
 {% endblock %}

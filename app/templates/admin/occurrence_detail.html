@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}MakeMana | Ocorrencia #{{ occurrence.id }}{% endblock %}
+{% block title %}MakeMana | Ocorrência #{{ occurrence.id }}{% endblock %}
 
 {% block content %}
 <section class="admin-page">
     <div class="admin-header">
         <div>
-            <h1>Ocorrencia #{{ occurrence.id }}</h1>
+            <h1>Ocorrência #{{ occurrence.id }}</h1>
             <p>Registrada em {{ occurrence.created_at | datetime_br }}</p>
         </div>
         <div class="admin-header-actions">
@@ -22,9 +22,9 @@
             <h2>Resumo</h2>
             <p><strong>Status:</strong> {{ occurrence.status }}</p>
             <p><strong>Categoria:</strong> {{ occurrence.mapped_category }}</p>
-            <p><strong>Urgencia:</strong> {{ occurrence.urgency_level }}</p>
+            <p><strong>Urgência:</strong> {{ occurrence.urgency_level }}</p>
             <p>
-                <strong>Conta da usuaria:</strong>
+                <strong>Conta da usuária:</strong>
                 {% if occurrence.user %}
                     {{ occurrence.user.username }} ({{ occurrence.user.email }})
                 {% else %}
@@ -33,11 +33,11 @@
             </p>
             <p><strong>Recebimento:</strong> {{ occurrence.recipient_name or "-" }}</p>
             <p><strong>Contato:</strong> {{ occurrence.contact_phone or "-" }} | {{ occurrence.contact_email or "-" }}</p>
-            <p><strong>Endereco:</strong> {{ occurrence.address_line or "-" }}</p>
+            <p><strong>Endereço:</strong> {{ occurrence.address_line or "-" }}</p>
             <p><strong>Localidade:</strong> {{ occurrence.city_line or "-" }}</p>
             <p><strong>CEP:</strong> {{ occurrence.address_zip_code or "-" }}</p>
             <p><strong>Janela de entrega:</strong> {{ occurrence.delivery_window or "-" }}</p>
-            <p><strong>Instrucoes:</strong> {{ occurrence.delivery_notes or "-" }}</p>
+            <p><strong>Instruções:</strong> {{ occurrence.delivery_notes or "-" }}</p>
             <p><strong>Relato inicial para encaminhamento:</strong> {{ occurrence.observation or "-" }}</p>
             <p><strong>Subtotal:</strong> {{ occurrence.subtotal_cents | brl }}</p>
             <p><strong>Desconto:</strong> {{ occurrence.discount_cents | brl }}</p>
@@ -73,14 +73,14 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                <p>Nenhum item disponivel.</p>
+                <p>Nenhum item disponível.</p>
             {% endif %}
         </article>
 
         <article class="admin-card">
             <h2>Notas internas</h2>
             <form action="{{ url_for('admin.occurrence_add_note', occurrence_id=occurrence.id) }}" method="post" class="note-form">
-                <textarea name="note_text" rows="4" placeholder="Registrar observacao de triagem..." required></textarea>
+                <textarea name="note_text" rows="4" placeholder="Registrar observação de triagem..." required></textarea>
                 <button class="buy-button" type="submit">Adicionar nota</button>
             </form>
             {% if occurrence.notes %}
@@ -99,7 +99,7 @@
     </div>
 
     <article class="admin-card">
-        <h2>Historico de status</h2>
+        <h2>Histórico de status</h2>
         {% if occurrence.histories %}
             <ul class="admin-list">
                 {% for event in occurrence.histories %}
@@ -114,12 +114,12 @@
                 {% endfor %}
             </ul>
         {% else %}
-            <p>Sem historico.</p>
+            <p>Sem histórico.</p>
         {% endif %}
     </article>
 
     <article class="admin-card">
-        <h2>Relato e mensagens da usuaria</h2>
+        <h2>Relato e mensagens da usuária</h2>
         {% if occurrence.user_messages %}
             <ul class="admin-list">
                 {% for message in occurrence.user_messages %}
@@ -140,7 +140,7 @@
                 </li>
             </ul>
         {% else %}
-            <p>Sem mensagens da usuaria.</p>
+            <p>Sem mensagens da usuária.</p>
         {% endif %}
     </article>
 </section>

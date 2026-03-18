@@ -6,9 +6,9 @@
 <section class="admin-login-page">
     <form class="admin-login-card" action="{{ url_for('admin.login_page', next=request.args.get('next', '')) }}" method="post">
         <h1>Painel administrativo</h1>
-        <p>Login restrito para recebimento, triagem e encaminhamento de ocorrencias.</p>
+        <p>Login restrito para recebimento, triagem e encaminhamento de ocorrências.</p>
 
-        <label for="username">Usuario</label>
+        <label for="username">Usuário</label>
         <input id="username" name="username" type="text" required>
 
         <label for="password">Senha</label>

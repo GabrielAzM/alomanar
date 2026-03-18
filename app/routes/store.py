@@ -33,26 +33,26 @@ ADMIN_SESSION_KEY = "admin_user_id"
 
 CATEGORY_PAGE_COPY = {
     "kits": {
-        "title": "Kits e acessorios",
-        "subtitle": "Ferramentas praticas para montar uma rotina completa",
+        "title": "Kits e acessórios",
+        "subtitle": "Ferramentas práticas para montar uma rotina completa",
         "text": (
-            "Selecao de pinceis, esponjas e combos para facilitar o dia a dia de quem "
+            "Seleção de pincéis, esponjas e combos para facilitar o dia a dia de quem "
             "gosta de maquiagem bem acabada com menos improviso."
         ),
         "image_filename": "img-categorias-acessorios-alomana.jpg",
     },
     "skincare": {
         "title": "Skincare",
-        "subtitle": "Cuidado diario com texturas leves e produtos desejados",
+        "subtitle": "Cuidado diário com texturas leves e produtos desejados",
         "text": (
-            "Rotina com limpeza, hidratacao e protecao para preparar a pele e manter "
-            "o viro saudavel em qualquer horario."
+            "Rotina com limpeza, hidratação e proteção para preparar a pele e manter "
+            "o viro saudável em qualquer horário."
         ),
         "image_filename": "img-categorias-skincare-alomana.jpg",
     },
     "maquiagem": {
         "title": "Maquiagem",
-        "subtitle": "Bases, olhos, labios e acabamento com cara de best-seller",
+        "subtitle": "Bases, olhos, lábios e acabamento com cara de best-seller",
         "text": (
             "Vitrine com produtos que aparecem em listas de favoritos de quem procura "
             "boa performance, acabamento bonito e praticidade."
@@ -65,43 +65,43 @@ TESTIMONIALS = [
     {
         "name": "Yngrid",
         "photo": "img-clientes1-alomana.jpg",
-        "text": "Encontrei varias marcas conhecidas e o checkout foi rapido, direto e facil de acompanhar.",
+        "text": "Encontrei várias marcas conhecidas e o checkout foi rápido, direto e fácil de acompanhar.",
     },
     {
         "name": "Camilla",
         "photo": "img-clientes2-alomana.jpg",
-        "text": "Gostei dos kits e da selecao de skincare. A navegacao passa mesmo cara de loja pronta.",
+        "text": "Gostei dos kits e da seleção de skincare. A navegação passa mesmo cara de loja pronta.",
     },
     {
         "name": "Ana Caren",
         "photo": "img-clientes3-alomana.jpg",
-        "text": "Os detalhes de produto e a organizacao por categoria deixaram a vitrine muito mais crivel.",
+        "text": "Os detalhes de produto e a organização por categoria deixaram a vitrine muito mais crível.",
     },
     {
         "name": "Daviane",
         "photo": "img-clientes4-alomana.jpg",
-        "text": "O cupom de lancamento no checkout fechou bem a experiencia e ficou coerente com campanha promocional.",
+        "text": "O cupom de lançamento no checkout fechou bem a experiência e ficou coerente com campanha promocional.",
     },
 ]
 
 HOME_BENEFITS = [
     {
         "title": "Marcas conhecidas",
-        "text": "Curadoria com nomes lembrados em maquiagem, skincare e acessorios.",
+        "text": "Curadoria com nomes lembrados em maquiagem, skincare e acessórios.",
     },
     {
         "title": "Cupom de estreia",
-        "text": "Campanha promocional automatica para concluir o pedido sem atrito.",
+        "text": "Campanha promocional automática para concluir o pedido sem atrito.",
     },
     {
         "title": "Acompanhamento online",
-        "text": "Cada pedido gera protocolo e historico dentro da conta da cliente.",
+        "text": "Cada pedido gera protocolo e histórico dentro da conta da cliente.",
     },
 ]
 
 PRICE_FILTER_OPTIONS = (
-    {"code": "todos", "label": "Todos os precos", "min_cents": None, "max_cents": None},
-    {"code": "ate-99", "label": "Ate R$ 99", "min_cents": None, "max_cents": 9999},
+    {"code": "todos", "label": "Todos os preços", "min_cents": None, "max_cents": None},
+    {"code": "ate-99", "label": "Até R$ 99", "min_cents": None, "max_cents": 9999},
     {"code": "100-179", "label": "R$ 100 a R$ 179", "min_cents": 10000, "max_cents": 17999},
     {"code": "180-249", "label": "R$ 180 a R$ 249", "min_cents": 18000, "max_cents": 24999},
     {"code": "250-ou-mais", "label": "Acima de R$ 250", "min_cents": 25000, "max_cents": None},
@@ -292,7 +292,7 @@ def _validate_checkout_form(form_data):
         "recipient_name": "nome de recebimento",
         "zip_code": "CEP",
         "street": "rua",
-        "number": "numero",
+        "number": "número",
         "neighborhood": "bairro",
         "city": "cidade",
         "state": "UF",
@@ -307,23 +307,23 @@ def _validate_checkout_form(form_data):
         errors.append("Informe um nome de recebimento mais completo.")
 
     if form_data["zip_code"] and len(_normalize_digits(form_data["zip_code"])) != 8:
-        errors.append("Informe um CEP valido com 8 digitos.")
+        errors.append("Informe um CEP válido com 8 dígitos.")
 
     phone_digits = _normalize_digits(form_data["contact_phone"])
     if phone_digits and len(phone_digits) not in (10, 11):
-        errors.append("Informe um telefone valido com DDD.")
+        errors.append("Informe um telefone válido com DDD.")
 
     if form_data["contact_email"] and not _is_valid_email(form_data["contact_email"]):
-        errors.append("Informe um email valido para contato.")
+        errors.append("Informe um email válido para contato.")
 
     if form_data["state"] and len(form_data["state"]) != 2:
         errors.append("Informe a UF com 2 letras.")
 
     if len(form_data["delivery_notes"]) > 400:
-        errors.append("As instrucoes de entrega devem ter no maximo 400 caracteres.")
+        errors.append("As instruções de entrega devem ter no máximo 400 caracteres.")
 
     if len(form_data["observation"]) > 2000:
-        errors.append("A observacao do pedido deve ter no maximo 2000 caracteres.")
+        errors.append("A observação do pedido deve ter no máximo 2000 caracteres.")
 
     return errors
 
@@ -477,7 +477,7 @@ def add_cart_item():
 
     product = Product.query.filter_by(id=product_id, active=True).first()
     if not product:
-        flash("Produto nao encontrado.", "error")
+        flash("Produto não encontrado.", "error")
         return redirect(redirect_to)
 
     cart = _get_cart_dict()
@@ -495,7 +495,7 @@ def update_cart_item(item_id):
     cart = _get_cart_dict()
     key = str(item_id)
     if key not in cart:
-        flash("Item nao encontrado no carrinho.", "error")
+        flash("Item não encontrado no carrinho.", "error")
         return redirect(redirect_to)
 
     quantity = request.form.get("quantity", type=int)
@@ -531,14 +531,14 @@ def remove_cart_item(item_id):
 def checkout_page():
     cart_lines, subtotal_cents = _build_cart_lines()
     if not cart_lines:
-        flash("Seu carrinho esta vazio.", "warning")
+        flash("Seu carrinho está vazio.", "warning")
         return redirect(url_for("store.products_page"))
 
     user = _current_user()
     admin_user = _current_admin()
     if admin_user and not user:
         flash(
-            "Sessao admin ativa. O checkout funciona apenas para conta de usuaria.",
+            "Sessão admin ativa. O checkout funciona apenas para conta de usuária.",
             "warning",
         )
         return redirect(url_for("admin.occurrences_page"))
@@ -554,14 +554,14 @@ def checkout_page():
 def checkout_finalize():
     cart_lines, subtotal_cents = _build_cart_lines()
     if not cart_lines:
-        flash("Seu carrinho esta vazio.", "warning")
+        flash("Seu carrinho está vazio.", "warning")
         return redirect(url_for("store.products_page"))
 
     user = _current_user()
     admin_user = _current_admin()
     if admin_user and not user:
         flash(
-            "Sessao admin ativa. Saia do perfil admin e entre como usuaria para finalizar.",
+            "Sessão admin ativa. Saia do perfil admin e entre como usuária para finalizar.",
             "warning",
         )
         return redirect(url_for("admin.occurrences_page"))
@@ -596,7 +596,7 @@ def checkout_finalize():
             if URGENCY_SCORE[mapping_urgency] > URGENCY_SCORE[highest_urgency]:
                 highest_urgency = mapping_urgency
         else:
-            categories.append("Ocorrencia geral")
+            categories.append("Ocorrência geral")
 
         items_snapshot.append(
             {
@@ -610,7 +610,7 @@ def checkout_finalize():
             }
         )
 
-    mapped_category = ", ".join(list(dict.fromkeys(categories))) or "Ocorrencia geral"
+    mapped_category = ", ".join(list(dict.fromkeys(categories))) or "Ocorrência geral"
     discount_cents = subtotal_cents
     total_cents = 0
 

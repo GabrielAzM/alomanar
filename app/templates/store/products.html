@@ -45,7 +45,7 @@
             </details>
 
             <details class="filtro-grupo" open>
-                <summary class="filtro-header">Preco</summary>
+                <summary class="filtro-header">Preço</summary>
                 <ul class="filtro-lista">
                     {% for option in price_filter_options %}
                         <li class="filtro-item-opcao">
@@ -89,8 +89,8 @@
                 <select class="select-customizado" name="ordem" onchange="this.form.submit()">
                     <option value="mais-vendidos" {% if selected_order == 'mais-vendidos' %}selected{% endif %}>Mais vendidos</option>
                     <option value="mais-avaliados" {% if selected_order == 'mais-avaliados' %}selected{% endif %}>Mais avaliados</option>
-                    <option value="menor-preco" {% if selected_order == 'menor-preco' %}selected{% endif %}>Menor preco</option>
-                    <option value="maior-preco" {% if selected_order == 'maior-preco' %}selected{% endif %}>Maior preco</option>
+                    <option value="menor-preco" {% if selected_order == 'menor-preco' %}selected{% endif %}>Menor preço</option>
+                    <option value="maior-preco" {% if selected_order == 'maior-preco' %}selected{% endif %}>Maior preço</option>
                 </select>
             </form>
         </div>

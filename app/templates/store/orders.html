@@ -10,7 +10,7 @@
     </div>
 
     <article class="order-card account-summary-card">
-        <h2>Conta e entrega padrao</h2>
+        <h2>Conta e entrega padrão</h2>
         <p><strong>Cliente:</strong> {{ user.full_name or user.username }}</p>
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Telefone:</strong> {{ user.phone or "-" }}</p>
@@ -19,7 +19,7 @@
             <p><strong>Localidade:</strong> {{ user.city_line }}</p>
             <p><strong>CEP:</strong> {{ user.zip_code }}</p>
         {% else %}
-            <p>Seu endereco sera salvo automaticamente no proximo checkout.</p>
+            <p>Seu endereço será salvo automaticamente no próximo checkout.</p>
         {% endif %}
     </article>
 
@@ -51,7 +51,7 @@
             </table>
         </div>
     {% else %}
-        <p class="empty-state">Voce ainda nao possui pedidos registrados.</p>
+        <p class="empty-state">Você ainda não possui pedidos registrados.</p>
         <a class="buy-button" href="{{ url_for('store.products_page') }}">Ir para produtos</a>
     {% endif %}
 </section>

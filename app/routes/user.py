@@ -57,27 +57,27 @@ def register_page():
             return render_template("store/register.html", active_nav="cadastro")
 
         if len(username) < 3:
-            flash("Informe um usuario com pelo menos 3 caracteres.", "error")
+            flash("Informe um usuário com pelo menos 3 caracteres.", "error")
             return render_template("store/register.html", active_nav="cadastro")
 
         if "@" not in email or "." not in email:
-            flash("Informe um email valido.", "error")
+            flash("Informe um email válido.", "error")
             return render_template("store/register.html", active_nav="cadastro")
 
         if len(password) < 6:
-            flash("A senha deve ter no minimo 6 caracteres.", "error")
+            flash("A senha deve ter no mínimo 6 caracteres.", "error")
             return render_template("store/register.html", active_nav="cadastro")
 
         if password != confirm_password:
-            flash("As senhas nao coincidem.", "error")
+            flash("As senhas não coincidem.", "error")
             return render_template("store/register.html", active_nav="cadastro")
 
         if User.query.filter_by(username=username).first():
-            flash("Este nome de usuario ja esta em uso.", "error")
+            flash("Este nome de usuário já está em uso.", "error")
             return render_template("store/register.html", active_nav="cadastro")
 
         if User.query.filter_by(email=email).first():
-            flash("Este email ja esta cadastrado.", "error")
+            flash("Este email já está cadastrado.", "error")
             return render_template("store/register.html", active_nav="cadastro")
 
         user = User(username=username, email=email, full_name=full_name, phone=phone or None)
@@ -113,7 +113,7 @@ def login_page():
             (User.username == login) | (User.email == login.lower())
         ).first()
         if not user or not user.check_password(password):
-            flash("Usuario/email ou senha invalidos.", "error")
+            flash("Usuário/email ou senha inválidos.", "error")
             return render_template("store/login.html", active_nav="login")
 
         session.pop(ADMIN_SESSION_KEY, None)
@@ -131,7 +131,7 @@ def login_page():
 def logout():
     session.pop(USER_SESSION_KEY, None)
     session.modified = True
-    flash("Sessao do usuario encerrada.", "success")
+    flash("Sessão do usuário encerrada.", "success")
     return redirect(url_for("store.home_page"))
 
 
@@ -168,11 +168,11 @@ def order_add_message(occurrence_id):
     order = Occurrence.query.filter_by(id=occurrence_id, user_id=g.user.id).first_or_404()
     message_text = (request.form.get("message_text") or "").strip()
     if not message_text:
-        flash("A mensagem nao pode ser vazia.", "error")
+        flash("A mensagem não pode ser vazia.", "error")
         return redirect(url_for("user.order_detail_page", occurrence_id=order.id))
 
     if len(message_text) > 2000:
-        flash("A mensagem deve ter no maximo 2000 caracteres.", "error")
+        flash("A mensagem deve ter no máximo 2000 caracteres.", "error")
         return redirect(url_for("user.order_detail_page", occurrence_id=order.id))
 
     message = OccurrenceUserMessage(

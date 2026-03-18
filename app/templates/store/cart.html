@@ -6,7 +6,7 @@
 <section class="cart-page">
     <div class="title-container">
         <h1 class="h1-title">Sacola</h1>
-        <h2 class="h2-subtitle">Visao completa do pedido</h2>
+        <h2 class="h2-subtitle">Visão completa do pedido</h2>
     </div>
 
     {% if cart_lines %}
@@ -42,16 +42,16 @@
                 <h3>Total parcial</h3>
                 <p class="cart-summary-total">{{ subtotal_cents | brl }}</p>
                 {% if current_admin and not current_user %}
-                    <p class="cart-summary-hint">Sessao administrativa ativa. Para finalizar um pedido, saia do admin e entre com uma conta de usuaria.</p>
+                    <p class="cart-summary-hint">Sessão administrativa ativa. Para finalizar um pedido, saia do admin e entre com uma conta de usuária.</p>
                     <a class="buy-button cart-checkout-btn" href="{{ url_for('admin.occurrences_page') }}">Voltar ao painel</a>
                 {% else %}
-                    <p class="cart-summary-hint">No checkout o cupom promocional sera aplicado automaticamente.</p>
+                    <p class="cart-summary-hint">No checkout o cupom promocional será aplicado automaticamente.</p>
                     <a class="buy-button cart-checkout-btn" href="{{ url_for('store.checkout_page') }}">Ir para checkout</a>
                 {% endif %}
             </aside>
         </div>
     {% else %}
-        <p class="empty-state">Seu carrinho esta vazio. Escolha produtos para continuar.</p>
+        <p class="empty-state">Seu carrinho está vazio. Escolha produtos para continuar.</p>
         <a class="buy-button" href="{{ url_for('store.products_page') }}">Ver produtos</a>
     {% endif %}
 </section>

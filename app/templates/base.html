@@ -90,7 +90,7 @@
     <nav class="main-nav">
         <ul class="nav-list">
             {% if current_admin and request.path.startswith('/admin') %}
-                <li><a href="{{ url_for('admin.occurrences_page') }}" class="nav-link {% if active_nav == 'admin-occurrences' %}active-nav{% endif %}">OCORRENCIAS</a></li>
+                <li><a href="{{ url_for('admin.occurrences_page') }}" class="nav-link {% if active_nav == 'admin-occurrences' %}active-nav{% endif %}">OCORRÊNCIAS</a></li>
                 <li><a href="{{ url_for('admin.mappings_page') }}" class="nav-link {% if active_nav == 'admin-mappings' %}active-nav{% endif %}">MAPEAMENTOS</a></li>
                 <li><a href="{{ url_for('store.home_page') }}" class="nav-link">VER LOJA</a></li>
             {% else %}
@@ -171,14 +171,14 @@
                     {% endif %}
                 </div>
                 {% if current_admin and not current_user %}
-                    <p class="cart-summary-hint">Sessao administrativa ativa. O checkout fica disponivel apenas para conta de usuaria.</p>
+                    <p class="cart-summary-hint">Sessão administrativa ativa. O checkout fica disponível apenas para conta de usuária.</p>
                 {% else %}
                     <p class="cart-summary-hint">Cupom promocional aplicado no checkout.</p>
                 {% endif %}
             </div>
         {% else %}
             <div class="cart-drawer-empty">
-                <p>Sua sacola esta vazia no momento.</p>
+                <p>Sua sacola está vazia no momento.</p>
                 <a class="buy-button" href="{{ url_for('store.products_page') }}">Explorar produtos</a>
             </div>
         {% endif %}
@@ -188,7 +188,7 @@
         <div class="footer-grid footer-grid-expanded">
             <div class="footer-column footer-brand-column">
                 <img class="footer-logo-image" src="{{ logo_src }}" alt="MakeMana">
-                <p class="footer-brand-copy">Loja conceito de beleza com catalogo curado, checkout agil e acompanhamento digital dos pedidos.</p>
+                <p class="footer-brand-copy">Loja conceito de beleza com catálogo curado, checkout ágil e acompanhamento digital dos pedidos.</p>
             </div>
 
             <div class="footer-column">
@@ -197,7 +197,7 @@
                     <li><a href="{{ url_for('store.products_page') }}">Todos os produtos</a></li>
                     <li><a href="{{ url_for('store.maquiagem_page') }}">Maquiagem</a></li>
                     <li><a href="{{ url_for('store.skincare_page') }}">Skincare</a></li>
-                    <li><a href="{{ url_for('store.kits_page') }}">Kits e acessorios</a></li>
+                    <li><a href="{{ url_for('store.kits_page') }}">Kits e acessórios</a></li>
                 </ul>
             </div>
 
@@ -207,7 +207,7 @@
                     {% if current_admin %}
                         <li><a href="{{ url_for('admin.occurrences_page') }}">Painel interno</a></li>
                         <li><a href="{{ url_for('admin.mappings_page') }}">Mapeamentos</a></li>
-                        <li><span class="footer-session-note">Sessao admin: {{ current_admin.username }}</span></li>
+                        <li><span class="footer-session-note">Sessão admin: {{ current_admin.username }}</span></li>
                     {% elif current_user %}
                         <li><a href="{{ url_for('user.orders_page') }}">Minha conta</a></li>
                     {% else %}
@@ -224,7 +224,7 @@
             <div class="footer-column footer-meta-column">
                 <h3>Projeto</h3>
                 <p class="copyright">&copy; 2026 - MakeMana Beauty Store</p>
-                <p class="instituicao">Dados institucionais e contatos comerciais anonimizados para avaliacao desta versao.</p>
+                <p class="instituicao">Dados institucionais e contatos comerciais anonimizados para avaliação desta versão.</p>
             </div>
         </div>
     </footer>

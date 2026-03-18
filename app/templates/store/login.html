@@ -6,7 +6,7 @@
 <section class="auth-page">
     <form class="auth-card" action="{{ url_for('user.login_page', next=request.args.get('next', '')) }}" method="post">
         <h1>Entrar na conta</h1>
-        <p>Acompanhe pedidos, atualizacoes e dados de entrega da sua conta.</p>
+        <p>Acompanhe pedidos, atualizações e dados de entrega da sua conta.</p>
 
         <label for="login">Usuario ou email</label>
         <input id="login" name="login" type="text" value="{{ request.form.get('login', '') }}" required>
@@ -16,7 +16,7 @@
 
         <button class="buy-button" type="submit">Entrar</button>
         <p class="auth-secondary-link">
-            Nao tem conta?
+            Não tem conta?
             <a href="{{ url_for('user.register_page') }}">Criar conta</a>
         </p>
     </form>

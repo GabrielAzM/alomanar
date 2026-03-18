@@ -6,7 +6,7 @@
 <section class="checkout-page">
     <div class="title-container">
         <h1 class="h1-title">Checkout</h1>
-        <h2 class="h2-subtitle">Finalizacao</h2>
+        <h2 class="h2-subtitle">Finalização</h2>
     </div>
 
     <div class="checkout-layout">
@@ -15,7 +15,7 @@
             <p class="checkout-help-text">Pedido vinculado a: <strong>{{ user.full_name or user.username }}</strong> ({{ user.email }})</p>
 
             <h3>Entrega</h3>
-            <p class="checkout-help-text">Os dados abaixo ficam salvos para agilizar seus proximos pedidos.</p>
+            <p class="checkout-help-text">Os dados abaixo ficam salvos para agilizar seus próximos pedidos.</p>
 
             <div class="form-grid two-columns">
                 <div>
@@ -45,7 +45,7 @@
                     <input id="street" name="street" type="text" value="{{ checkout_data.street }}" required>
                 </div>
                 <div>
-                    <label for="number">Numero</label>
+                    <label for="number">Número</label>
                     <input id="number" name="number" type="text" value="{{ checkout_data.number }}" required>
                 </div>
             </div>
@@ -71,11 +71,11 @@
             <label for="delivery_window">Melhor horario para receber (opcional)</label>
             <input id="delivery_window" name="delivery_window" type="text" placeholder="Ex.: comercial, apos 18h, sabado pela manha" value="{{ checkout_data.delivery_window }}">
 
-            <label for="delivery_notes">Instrucoes de entrega (opcional)</label>
-            <textarea id="delivery_notes" name="delivery_notes" rows="3" placeholder="Ex.: portaria, referencia ou observacao rapida.">{{ checkout_data.delivery_notes }}</textarea>
+            <label for="delivery_notes">Instruções de entrega (opcional)</label>
+            <textarea id="delivery_notes" name="delivery_notes" rows="3" placeholder="Ex.: portaria, referência ou observação rápida.">{{ checkout_data.delivery_notes }}</textarea>
 
             <label for="observation">Relato inicial para atendimento (opcional)</label>
-            <textarea id="observation" name="observation" rows="5" placeholder="Descreva aqui o caso ou o contexto inicial. Esse texto tambem ficara visivel no acompanhamento.">{{ checkout_data.observation }}</textarea>
+            <textarea id="observation" name="observation" rows="5" placeholder="Descreva aqui o caso ou o contexto inicial. Esse texto também ficará visível no acompanhamento.">{{ checkout_data.observation }}</textarea>
 
             <button class="buy-button checkout-submit" type="submit">Finalizar pedido</button>
         </form>

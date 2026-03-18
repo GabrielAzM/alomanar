@@ -10,7 +10,7 @@
             <p>Usuario ativo: {{ admin_user.username }}</p>
         </div>
         <div class="admin-header-actions">
-            <a class="buy-button secondary-btn" href="{{ url_for('admin.occurrences_page') }}">Ocorrencias</a>
+            <a class="buy-button secondary-btn" href="{{ url_for('admin.occurrences_page') }}">Ocorrências</a>
             <form action="{{ url_for('admin.logout') }}" method="post">
                 <button class="buy-button" type="submit">Sair</button>
             </form>
@@ -23,7 +23,7 @@
                 <tr>
                     <th>Produto</th>
                     <th>Categoria da ocorrencia</th>
-                    <th>Nivel de urgencia</th>
+                    <th>Nível de urgência</th>
                     <th></th>
                 </tr>
             </thead>

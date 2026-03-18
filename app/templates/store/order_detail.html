@@ -49,7 +49,7 @@
     </article>
 
     <article class="order-card">
-        <h2>Historico de status</h2>
+        <h2>Histórico de status</h2>
         {% if order.histories %}
             <ul class="order-list">
                 {% for event in order.histories %}
@@ -63,14 +63,14 @@
                 {% endfor %}
             </ul>
         {% else %}
-            <p>Sem historico registrado.</p>
+            <p>Sem histórico registrado.</p>
         {% endif %}
     </article>
 
     <article class="order-card">
         <h2>Mensagens para o atendimento</h2>
         <form class="user-message-form" action="{{ url_for('user.order_add_message', occurrence_id=order.id) }}" method="post">
-            <textarea name="message_text" rows="4" maxlength="2000" placeholder="Escreva uma atualizacao sobre entrega, contato ou observacoes do pedido..." required></textarea>
+            <textarea name="message_text" rows="4" maxlength="2000" placeholder="Escreva uma atualização sobre entrega, contato ou observações do pedido..." required></textarea>
             <button class="buy-button" type="submit">Enviar mensagem</button>
         </form>
 
@@ -91,7 +91,7 @@
                 </li>
             </ul>
         {% else %}
-            <p>Nenhuma mensagem enviada ate o momento.</p>
+            <p>Nenhuma mensagem enviada até o momento.</p>
         {% endif %}
     </article>
 
