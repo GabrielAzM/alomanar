@@ -7,7 +7,7 @@
     <div class="admin-header">
         <div>
             <h1>Ocorrencias registradas</h1>
-            <p>Usuario ativo: {{ admin_user.username }}</p>
+            <p>Usuario ativo: {{ admin_user.username }} | {{ result_count }} caso(s) visivel(is)</p>
         </div>
         <div class="admin-header-actions">
             <a class="buy-button secondary-btn" href="{{ url_for('admin.mappings_page') }}">Mapeamentos</a>
@@ -21,12 +21,43 @@
         <input type="text" name="q" value="{{ search_term }}" placeholder="Buscar por protocolo, categoria, recebimento ou contato">
         <select name="status">
             <option value="">Todos os status</option>
-            {% for status in statuses %}
-                <option value="{{ status }}" {% if status_filter == status %}selected{% endif %}>{{ status }}</option>
+            {% for status_value, status_label in status_filter_options %}
+                <option value="{{ status_value }}" {% if status_filter == status_value %}selected{% endif %}>{{ status_label }}</option>
+            {% endfor %}
+        </select>
+        <select name="urgencia">
+            <option value="">Todas as urgencias</option>
+            {% for urgency in urgency_levels %}
+                <option value="{{ urgency }}" {% if urgency_filter == urgency %}selected{% endif %}>{{ urgency }}</option>
+            {% endfor %}
+        </select>
+        <select name="categoria">
+            <option value="">Todas as categorias</option>
+            {% for category in category_options %}
+                <option value="{{ category }}" {% if category_filter == category %}selected{% endif %}>{{ category }}</option>
+            {% endfor %}
+        </select>
+        <select name="ordem">
+            {% for sort_code, sort_label in sort_options %}
+                <option value="{{ sort_code }}" {% if sort_by == sort_code %}selected{% endif %}>{{ sort_label }}</option>
             {% endfor %}
         </select>
         <button class="buy-button" type="submit">Filtrar</button>
+        <a class="buy-button secondary-btn" href="{{ url_for('admin.occurrences_page') }}">Limpar</a>
     </form>
+
+    <div class="admin-summary-grid">
+        {% for card in summary_cards %}
+            <article class="admin-summary-card summary-card-{{ card.tone }}">
+                <span>{{ card.label }}</span>
+                <strong>{{ card.value }}</strong>
+            </article>
+        {% endfor %}
+    </div>
+
+    <p class="admin-results-meta">
+        Use os filtros para separar o que ainda esta em analise, o que ja foi encaminhado e os casos de maior urgencia.
+    </p>
 
     {% if occurrences %}
         <div class="admin-table-wrapper">
@@ -34,12 +65,12 @@
                 <thead>
                     <tr>
                         <th>Protocolo</th>
-                        <th>Data</th>
-                        <th>Categoria</th>
+                        <th>Registro</th>
+                        <th>Atualizado</th>
+                        <th>Caso</th>
                         <th>Urgencia</th>
                         <th>Status</th>
                         <th>Usuario</th>
-                        <th>Total</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -48,7 +79,17 @@
                         <tr>
                             <td>#{{ occurrence.id }}</td>
                             <td>{{ occurrence.created_at | datetime_br }}</td>
-                            <td>{{ occurrence.mapped_category }}</td>
+                            <td>{{ occurrence.updated_at | datetime_br }}</td>
+                            <td class="admin-case-cell">
+                                <strong>{{ occurrence.mapped_category }}</strong>
+                                {% if occurrence.observation %}
+                                    <small class="table-muted">
+                                        {{ occurrence.observation[:120] }}{% if occurrence.observation|length > 120 %}...{% endif %}
+                                    </small>
+                                {% else %}
+                                    <small class="table-muted">Sem relato inicial registrado.</small>
+                                {% endif %}
+                            </td>
                             <td>{{ occurrence.urgency_level }}</td>
                             <td>{{ occurrence.status }}</td>
                             <td>
@@ -59,7 +100,6 @@
                                     -
                                 {% endif %}
                             </td>
-                            <td>{{ occurrence.total_cents | brl }}</td>
                             <td>
                                 <a class="table-link" href="{{ url_for('admin.occurrence_detail_page', occurrence_id=occurrence.id) }}">Abrir</a>
                             </td>
