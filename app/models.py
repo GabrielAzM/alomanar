@@ -856,30 +856,30 @@ LEGACY_DEFAULT_PRODUCT_SLUGS = {
 }
 
 DEFAULT_PRODUCT_MAPPINGS = {
-    "reveal-the-real-12hr-foundation": ("Violencia fisica", "Alta"),
-    "best-skin-ever-foundation": ("Violencia psicologica", "Media"),
-    "niina-secrets-hidra-glow-base": ("Violencia moral", "Baixa"),
-    "radiant-creamy-concealer": ("Ameaca imediata", "Critica"),
-    "radiant-creamy-concealer-mini": ("Assedio", "Media"),
-    "soft-pinch-liquid-blush-mini": ("Coacao", "Media"),
-    "soft-pinch-luminous-powder-blush": ("Acompanhamento continuo", "Baixa"),
-    "soft-pinch-liquid-contour": ("Perseguicao", "Alta"),
-    "cream-lip-stain": ("Violencia patrimonial", "Media"),
-    "the-colossal-waterproof": ("Ameaca imediata", "Critica"),
-    "the-falsies-lash-lift": ("Assedio", "Media"),
-    "natural-eyes-palette": ("Violencia psicologica", "Alta"),
-    "photo-finish-smooth-blur-primer": ("Violencia moral", "Baixa"),
-    "translucent-loose-setting-powder": ("Coacao", "Alta"),
-    "all-nighter-setting-spray": ("Risco familiar", "Alta"),
-    "lip-sleeping-mask": ("Acompanhamento continuo", "Baixa"),
-    "total-cleansr-remove-it-all": ("Necessidade de acolhimento", "Alta"),
-    "watermelon-glow-pha-bha-toner": ("Violencia moral", "Baixa"),
-    "watermelon-glow-hue-drops": ("Acompanhamento continuo", "Baixa"),
-    "dew-balm-spf45": ("Monitoramento de risco", "Media"),
-    "lait-creme-concentre": ("Necessidade de acolhimento", "Media"),
-    "urban-environment-oil-free-spf30": ("Monitoramento de risco", "Baixa"),
-    "everyday-essentials-kit": ("Risco familiar", "Alta"),
-    "miracle-complexion-sponge": ("Ocorrencia geral", "Baixa"),
+    "reveal-the-real-12hr-foundation": ("Ocorrência geral", "Média"),
+    "best-skin-ever-foundation": ("Ocorrência geral", "Média"),
+    "niina-secrets-hidra-glow-base": ("Ocorrência geral", "Média"),
+    "radiant-creamy-concealer": ("Ocorrência geral", "Média"),
+    "radiant-creamy-concealer-mini": ("Ocorrência geral", "Média"),
+    "soft-pinch-liquid-blush-mini": ("Ocorrência geral", "Média"),
+    "soft-pinch-luminous-powder-blush": ("Ocorrência geral", "Média"),
+    "soft-pinch-liquid-contour": ("Ocorrência geral", "Média"),
+    "cream-lip-stain": ("Ocorrência geral", "Média"),
+    "the-colossal-waterproof": ("Ocorrência geral", "Média"),
+    "the-falsies-lash-lift": ("Ocorrência geral", "Média"),
+    "natural-eyes-palette": ("Ocorrência geral", "Média"),
+    "photo-finish-smooth-blur-primer": ("Ocorrência geral", "Média"),
+    "translucent-loose-setting-powder": ("Ocorrência geral", "Média"),
+    "all-nighter-setting-spray": ("Ocorrência geral", "Média"),
+    "lip-sleeping-mask": ("Ocorrência geral", "Média"),
+    "total-cleansr-remove-it-all": ("Ocorrência geral", "Média"),
+    "watermelon-glow-pha-bha-toner": ("Ocorrência geral", "Média"),
+    "watermelon-glow-hue-drops": ("Ocorrência geral", "Média"),
+    "dew-balm-spf45": ("Ocorrência geral", "Média"),
+    "lait-creme-concentre": ("Ocorrência geral", "Média"),
+    "urban-environment-oil-free-spf30": ("Ocorrência geral", "Média"),
+    "everyday-essentials-kit": ("Ocorrência geral", "Média"),
+    "miracle-complexion-sponge": ("Ocorrência geral", "Média"),
 }
 
 
@@ -1069,4 +1069,3 @@ def migrate_schema():
     )
 
     _normalize_legacy_values()
-
