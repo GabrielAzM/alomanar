@@ -1,4 +1,6 @@
-from flask import Flask, session
+from pathlib import Path
+
+from flask import Flask, session, send_from_directory, url_for
 
 from config import Config
 
@@ -13,6 +15,10 @@ from .utils import format_brl, format_datetime_br
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+    static_dir = Path(app.static_folder)
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
+    app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
+    app.jinja_env.auto_reload = True
 
     db.init_app(app)
     app.register_blueprint(store_bp)
@@ -25,6 +31,11 @@ def create_app(config_class=Config):
 
     @app.context_processor
     def inject_global_vars():
+        def asset_url(filename: str) -> str:
+            asset_path = static_dir / filename
+            asset_version = int(asset_path.stat().st_mtime) if asset_path.exists() else None
+            return url_for("static", filename=filename, v=asset_version)
+
         cart = session.get("cart", {})
         if isinstance(cart, dict):
             cart_count = sum(int(quantity) for quantity in cart.values() if str(quantity).isdigit())
@@ -42,7 +53,12 @@ def create_app(config_class=Config):
             "cart_subtotal_cents": cart_subtotal_cents,
             "current_user": current_user,
             "current_admin": current_admin,
+            "asset_url": asset_url,
         }
+
+    @app.get("/favicon.ico")
+    def favicon():
+        return send_from_directory(static_dir / "img", "makemanafavicon.png", mimetype="image/png")
 
     with app.app_context():
         db.create_all()

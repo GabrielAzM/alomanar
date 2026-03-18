@@ -1,4 +1,4 @@
-﻿# Alo!Mana? 2.0
+# MakeMana 2.0
 
 Prototipo web em Flask com fachada de e-commerce para registro discreto de ocorrencias, checkout com cupom 100% e painel administrativo.
 
@@ -40,6 +40,8 @@ Prototipo web em Flask com fachada de e-commerce para registro discreto de ocorr
 
 ## Executar localmente
 
+Use Python `3.13.x` para o ambiente virtual. Neste projeto, o stack atual falhou com Python `3.14` no import do `Flask/Werkzeug`.
+
 1. Instalar dependencias:
    - `python -m pip install -r requirements.txt`
 2. Rodar a app:
@@ -55,7 +57,7 @@ Prototipo web em Flask com fachada de e-commerce para registro discreto de ocorr
   - senha: `admin123`
 - Usuario demo:
   - usuario: `usuario_demo`
-  - email: `usuario@alomana.local`
+  - email: `usuario@makemana.local`
   - senha: `usuario123`
 
 ## Deploy no Render
@@ -94,3 +96,4 @@ O projeto ja inclui os arquivos de deploy:
 
 A instituicao foi anonimizada nas telas com a frase:
 - `informacao omitida e anonimizada para avaliacao`
+

@@ -21,5 +21,6 @@ class Config:
     ADMIN_DEFAULT_USERNAME = os.environ.get("ADMIN_DEFAULT_USERNAME", "admin")
     ADMIN_DEFAULT_PASSWORD = os.environ.get("ADMIN_DEFAULT_PASSWORD", "admin123")
     USER_DEFAULT_USERNAME = os.environ.get("USER_DEFAULT_USERNAME", "usuario_demo")
-    USER_DEFAULT_EMAIL = os.environ.get("USER_DEFAULT_EMAIL", "usuario@alomana.local")
+    USER_DEFAULT_EMAIL = os.environ.get("USER_DEFAULT_EMAIL", "usuario@makemana.local")
     USER_DEFAULT_PASSWORD = os.environ.get("USER_DEFAULT_PASSWORD", "usuario123")
+

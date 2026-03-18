@@ -27,7 +27,7 @@ from app.models import (
 store_bp = Blueprint("store", __name__)
 
 CART_SESSION_KEY = "cart"
-AUTO_COUPON_CODE = "ALOCLUB100"
+AUTO_COUPON_CODE = "MAKECLUB100"
 USER_SESSION_KEY = "user_id"
 ADMIN_SESSION_KEY = "admin_user_id"
 
@@ -688,3 +688,4 @@ def checkout_success_page(occurrence_id):
         user=user,
         active_nav="checkout",
     )
+

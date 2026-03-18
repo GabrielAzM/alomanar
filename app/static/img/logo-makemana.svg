@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120" role="img" aria-labelledby="title desc">
+  <title id="title">MakeMana</title>
+  <desc id="desc">Logo MakeMana em tipografia sobre fundo suave.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff4f7"/>
+      <stop offset="100%" stop-color="#f4ead6"/>
+    </linearGradient>
+  </defs>
+  <rect width="420" height="120" rx="28" fill="url(#bg)"/>
+  <text x="210" y="66" text-anchor="middle" fill="#7a1e3a" font-size="44" font-family="Montserrat, Arial, sans-serif" font-weight="700" letter-spacing="1">MakeMana</text>
+  <circle cx="86" cy="34" r="7" fill="#d14d72" opacity="0.9"/>
+  <circle cx="333" cy="84" r="6" fill="#d9a85f" opacity="0.9"/>
+</svg>

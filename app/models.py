@@ -19,7 +19,7 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(120), unique=True, nullable=False, index=True)
     name = db.Column(db.String(200), nullable=False)
-    brand = db.Column(db.String(120), nullable=False, default="AloMana")
+    brand = db.Column(db.String(120), nullable=False, default="MakeMana")
     category_slug = db.Column(db.String(40), nullable=False, index=True)
     category_label = db.Column(db.String(80), nullable=False)
     subcategory_label = db.Column(db.String(80), nullable=False, default="Produto")
@@ -937,13 +937,13 @@ def seed_database(app_config):
         db.session.add(admin_user)
 
     demo_username = app_config.get("USER_DEFAULT_USERNAME", "usuario_demo")
-    demo_email = app_config.get("USER_DEFAULT_EMAIL", "usuario@alomana.local")
+    demo_email = app_config.get("USER_DEFAULT_EMAIL", "usuario@makemana.local")
     demo_user = User.query.filter_by(username=demo_username).first()
     if demo_user is None and not User.query.first():
         demo_user = User(
             username=demo_username,
             email=demo_email,
-            full_name="Cliente Demo AloMana",
+            full_name="Cliente Demo MakeMana",
             phone="(11) 99876-5432",
             zip_code="01311-000",
             street="Avenida Paulista",
@@ -957,7 +957,7 @@ def seed_database(app_config):
         db.session.add(demo_user)
     elif demo_user is not None:
         demo_user.email = demo_email
-        demo_user.full_name = demo_user.full_name or "Cliente Demo AloMana"
+        demo_user.full_name = demo_user.full_name or "Cliente Demo MakeMana"
         demo_user.phone = demo_user.phone or "(11) 99876-5432"
         demo_user.zip_code = demo_user.zip_code or "01311-000"
         demo_user.street = demo_user.street or "Avenida Paulista"
@@ -1025,7 +1025,7 @@ def migrate_schema():
         inspector,
         "products",
         {
-            "brand": "VARCHAR(120) DEFAULT 'AloMana'",
+            "brand": "VARCHAR(120) DEFAULT 'MakeMana'",
             "subcategory_label": "VARCHAR(80) DEFAULT 'Produto'",
             "badge_label": "VARCHAR(80)",
             "shade_label": "VARCHAR(120)",
@@ -1069,3 +1069,4 @@ def migrate_schema():
     )
 
     _normalize_legacy_values()
+

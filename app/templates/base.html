@@ -1,10 +1,14 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Alo!Mana?{% endblock %}</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo-favicon-alomana.png') }}" type="image/x-icon">
+    <title>{% block title %}MakeMana{% endblock %}</title>
+    {% set favicon_src = asset_url('img/makemanafavicon.png') %}
+    {% set logo_src = asset_url('img/logomakemana.png') %}
+    <link rel="icon" href="{{ favicon_src }}" type="image/png">
+    <link rel="shortcut icon" href="{{ favicon_src }}" type="image/png">
+    <link rel="apple-touch-icon" href="{{ favicon_src }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
@@ -32,7 +36,7 @@
             </div>
 
             <a href="{{ url_for('store.home_page') }}">
-                <img class="logo-alomana" src="{{ url_for('static', filename='img/logo-alomana.png') }}" alt="Alo!Mana? Logo">
+                <img class="logo-alomana" src="{{ logo_src }}" alt="MakeMana Logo">
             </a>
 
             <div class="header-actions">
@@ -183,7 +187,7 @@
     <footer class="main-footer">
         <div class="footer-grid footer-grid-expanded">
             <div class="footer-column footer-brand-column">
-                <img class="footer-logo-image" src="{{ url_for('static', filename='img/logo-alomana.png') }}" alt="Alo!Mana?">
+                <img class="footer-logo-image" src="{{ logo_src }}" alt="MakeMana">
                 <p class="footer-brand-copy">Loja conceito de beleza com catalogo curado, checkout agil e acompanhamento digital dos pedidos.</p>
             </div>
 
@@ -219,7 +223,7 @@
 
             <div class="footer-column footer-meta-column">
                 <h3>Projeto</h3>
-                <p class="copyright">&copy; 2026 - Alo!Mana? Beauty Store</p>
+                <p class="copyright">&copy; 2026 - MakeMana Beauty Store</p>
                 <p class="instituicao">Dados institucionais e contatos comerciais anonimizados para avaliacao desta versao.</p>
             </div>
         </div>
@@ -229,4 +233,5 @@
     {% block scripts %}{% endblock %}
 </body>
 </html>
+
 

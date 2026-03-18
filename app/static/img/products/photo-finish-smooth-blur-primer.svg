@@ -1,6 +1,6 @@
 <svg xmlns='http://www.w3.org/2000/svg' width='900' height='900' viewBox='0 0 480 480' role='img' aria-labelledby='title desc'>
-<title>Primer Photo Finish Smooth & Blur</title>
-<desc>Packshot em fundo de estudio para o produto Primer Photo Finish Smooth & Blur.</desc>
+<title>Primer Photo Finish Smooth &amp; Blur</title>
+<desc>Packshot em fundo de estudio para o produto Primer Photo Finish Smooth &amp; Blur.</desc>
 <defs>
   <linearGradient id='bg' x1='0%' y1='0%' x2='0%' y2='100%'>
     <stop offset='0%' stop-color='#fff6f8'/>
@@ -25,7 +25,7 @@
           <path d='M168 146H312L284 564H196Z' fill='url(#packBody)'/>
           <rect x='202' y='98' width='76' height='72' rx='20' fill='#6f2940'/>
           <rect x='194' y='244' width='92' height='156' rx='18' fill='rgba(255,255,255,0.94)'/>
-          <text x='240' y='246' text-anchor='middle' fill='#6f2940' font-size='18' font-family='Montserrat, Arial, sans-serif' font-weight='700' letter-spacing='2'>SMASHBOX</text><text x='240' y='272' text-anchor='middle' fill='#6f2940' opacity='0.7' font-size='11' font-family='Lato, Arial, sans-serif'>PRIMER</text><text x='240' y='306' text-anchor='middle' fill='#6f2940' font-size='16' font-family='Montserrat, Arial, sans-serif' font-weight='600'>Primer Photo</text><text x='240' y='326' text-anchor='middle' fill='#6f2940' font-size='16' font-family='Montserrat, Arial, sans-serif' font-weight='600'>Finish Smooth &</text><text x='240' y='346' text-anchor='middle' fill='#6f2940' font-size='16' font-family='Montserrat, Arial, sans-serif' font-weight='600'>Blur</text><text x='240' y='376' text-anchor='middle' fill='#6f2940' opacity='0.7' font-size='11' font-family='Lato, Arial, sans-serif'>12 ml</text>
+          <text x='240' y='246' text-anchor='middle' fill='#6f2940' font-size='18' font-family='Montserrat, Arial, sans-serif' font-weight='700' letter-spacing='2'>SMASHBOX</text><text x='240' y='272' text-anchor='middle' fill='#6f2940' opacity='0.7' font-size='11' font-family='Lato, Arial, sans-serif'>PRIMER</text><text x='240' y='306' text-anchor='middle' fill='#6f2940' font-size='16' font-family='Montserrat, Arial, sans-serif' font-weight='600'>Primer Photo</text><text x='240' y='326' text-anchor='middle' fill='#6f2940' font-size='16' font-family='Montserrat, Arial, sans-serif' font-weight='600'>Finish Smooth &amp;</text><text x='240' y='346' text-anchor='middle' fill='#6f2940' font-size='16' font-family='Montserrat, Arial, sans-serif' font-weight='600'>Blur</text><text x='240' y='376' text-anchor='middle' fill='#6f2940' opacity='0.7' font-size='11' font-family='Lato, Arial, sans-serif'>12 ml</text>
         </g>
         
 </svg>
