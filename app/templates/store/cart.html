@@ -41,8 +41,13 @@
             <aside class="cart-summary">
                 <h3>Total parcial</h3>
                 <p class="cart-summary-total">{{ subtotal_cents | brl }}</p>
-                <p class="cart-summary-hint">No checkout o cupom promocional sera aplicado automaticamente.</p>
-                <a class="buy-button cart-checkout-btn" href="{{ url_for('store.checkout_page') }}">Ir para checkout</a>
+                {% if current_admin and not current_user %}
+                    <p class="cart-summary-hint">Sessao administrativa ativa. Para finalizar um pedido, saia do admin e entre com uma conta de usuaria.</p>
+                    <a class="buy-button cart-checkout-btn" href="{{ url_for('admin.occurrences_page') }}">Voltar ao painel</a>
+                {% else %}
+                    <p class="cart-summary-hint">No checkout o cupom promocional sera aplicado automaticamente.</p>
+                    <a class="buy-button cart-checkout-btn" href="{{ url_for('store.checkout_page') }}">Ir para checkout</a>
+                {% endif %}
             </aside>
         </div>
     {% else %}

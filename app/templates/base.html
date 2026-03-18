@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="dark-mode-wrapper">
-                    <label class="switch" aria-label="Alternar tema">
+                    <label class="switch" aria-label="Mudar visual">
                         <input
                             type="checkbox"
                             id="dark-mode-toggle"
@@ -64,7 +64,7 @@
                         >
                         <span class="slider"></span>
                     </label>
-                    <span class="dark-mode-text">Dark Mode</span>
+                    <span class="dark-mode-text">Mudar visual</span>
                 </div>
 
                 <a href="{{ url_for('store.cart_page') }}" class="cart-link" aria-label="Abrir carrinho" data-cart-trigger>
@@ -158,11 +158,19 @@
             </div>
             <div class="cart-drawer-footer">
                 <p><span>Subtotal</span> <strong>{{ cart_subtotal_cents | brl }}</strong></p>
-                <p class="cart-summary-hint">Cupom promocional aplicado no checkout.</p>
                 <div class="cart-drawer-footer-actions">
                     <a class="buy-button secondary-btn" href="{{ url_for('store.cart_page') }}">Abrir carrinho</a>
-                    <a class="buy-button" href="{{ url_for('store.checkout_page') }}">Checkout</a>
+                    {% if current_admin and not current_user %}
+                        <a class="buy-button" href="{{ url_for('admin.occurrences_page') }}">Painel admin</a>
+                    {% else %}
+                        <a class="buy-button" href="{{ url_for('store.checkout_page') }}">Checkout</a>
+                    {% endif %}
                 </div>
+                {% if current_admin and not current_user %}
+                    <p class="cart-summary-hint">Sessao administrativa ativa. O checkout fica disponivel apenas para conta de usuaria.</p>
+                {% else %}
+                    <p class="cart-summary-hint">Cupom promocional aplicado no checkout.</p>
+                {% endif %}
             </div>
         {% else %}
             <div class="cart-drawer-empty">

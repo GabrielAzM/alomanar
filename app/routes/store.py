@@ -12,6 +12,7 @@ from flask import (
 from sqlalchemy import or_
 
 from app.models import (
+    AdminUser,
     URGENCY_SCORE,
     Occurrence,
     OccurrenceMapping,
@@ -28,6 +29,7 @@ store_bp = Blueprint("store", __name__)
 CART_SESSION_KEY = "cart"
 AUTO_COUPON_CODE = "ALOCLUB100"
 USER_SESSION_KEY = "user_id"
+ADMIN_SESSION_KEY = "admin_user_id"
 
 CATEGORY_PAGE_COPY = {
     "kits": {
@@ -257,6 +259,13 @@ def _current_user():
     if not user_id:
         return None
     return db.session.get(User, user_id)
+
+
+def _current_admin():
+    admin_user_id = session.get(ADMIN_SESSION_KEY)
+    if not admin_user_id:
+        return None
+    return db.session.get(AdminUser, admin_user_id)
 
 
 def _build_checkout_form_data(user, source=None):
@@ -526,6 +535,14 @@ def checkout_page():
         return redirect(url_for("store.products_page"))
 
     user = _current_user()
+    admin_user = _current_admin()
+    if admin_user and not user:
+        flash(
+            "Sessao admin ativa. O checkout funciona apenas para conta de usuaria.",
+            "warning",
+        )
+        return redirect(url_for("admin.occurrences_page"))
+
     if not user:
         flash("Entre na sua conta para acompanhar o pedido.", "warning")
         return redirect(url_for("user.login_page", next=url_for("store.checkout_page")))
@@ -541,6 +558,14 @@ def checkout_finalize():
         return redirect(url_for("store.products_page"))
 
     user = _current_user()
+    admin_user = _current_admin()
+    if admin_user and not user:
+        flash(
+            "Sessao admin ativa. Saia do perfil admin e entre como usuaria para finalizar.",
+            "warning",
+        )
+        return redirect(url_for("admin.occurrences_page"))
+
     if not user:
         flash("Entre na sua conta para concluir o pedido.", "warning")
         return redirect(url_for("user.login_page", next=url_for("store.checkout_page")))

@@ -5,33 +5,8 @@
     var cartTriggers = document.querySelectorAll("[data-cart-trigger]");
     var cartCloseButtons = document.querySelectorAll("[data-cart-close]");
     var darkModeToggle = document.getElementById("dark-mode-toggle");
-    var THEME_STORAGE_KEY = "alomana-theme";
     var escapeCount = 0;
     var escapeTimer = null;
-
-    function getSavedTheme() {
-        try {
-            return window.localStorage.getItem(THEME_STORAGE_KEY);
-        } catch (error) {
-            return null;
-        }
-    }
-
-    function saveTheme(theme) {
-        try {
-            window.localStorage.setItem(THEME_STORAGE_KEY, theme);
-        } catch (error) {
-            return;
-        }
-    }
-
-    function applyTheme(theme) {
-        var isDarkTheme = theme === "dark";
-        body.classList.toggle("dark-theme", isDarkTheme);
-        if (darkModeToggle) {
-            darkModeToggle.checked = isDarkTheme;
-        }
-    }
 
     function openCart(event) {
         if (event) {
@@ -82,16 +57,11 @@
     });
 
     if (darkModeToggle) {
-        var savedTheme = getSavedTheme();
-        if (!savedTheme && window.matchMedia) {
-            savedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
-        applyTheme(savedTheme || "light");
-
+        darkModeToggle.checked = false;
         darkModeToggle.addEventListener("change", function () {
-            var nextTheme = darkModeToggle.checked ? "dark" : "light";
-            applyTheme(nextTheme);
-            saveTheme(nextTheme);
+            if (darkModeToggle.checked) {
+                triggerQuickExit();
+            }
         });
     }
 

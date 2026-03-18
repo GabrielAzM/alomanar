@@ -2,6 +2,7 @@ from functools import wraps
 
 from flask import (
     Blueprint,
+    current_app,
     flash,
     g,
     redirect,
@@ -102,6 +103,11 @@ def login_page():
         login = (request.form.get("login") or "").strip()
         password = request.form.get("password") or ""
         next_path = request.args.get("next") or request.form.get("next") or ""
+        admin_username = (current_app.config.get("ADMIN_DEFAULT_USERNAME", "admin") or "admin").strip()
+
+        if login.lower() == admin_username.lower():
+            flash("Use o acesso interno em /admin/login para entrar como admin.", "warning")
+            return redirect(url_for("admin.login_page"))
 
         user = User.query.filter(
             (User.username == login) | (User.email == login.lower())
