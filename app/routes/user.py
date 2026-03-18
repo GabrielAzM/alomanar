@@ -16,6 +16,7 @@ from app.models import Occurrence, OccurrenceUserMessage, User, db
 
 user_bp = Blueprint("user", __name__)
 USER_SESSION_KEY = "user_id"
+ADMIN_SESSION_KEY = "admin_user_id"
 
 
 def current_user():
@@ -83,6 +84,7 @@ def register_page():
         db.session.add(user)
         db.session.commit()
 
+        session.pop(ADMIN_SESSION_KEY, None)
         session[USER_SESSION_KEY] = user.id
         session.modified = True
         flash("Cadastro realizado com sucesso.", "success")
@@ -108,6 +110,7 @@ def login_page():
             flash("Usuario/email ou senha invalidos.", "error")
             return render_template("store/login.html", active_nav="login")
 
+        session.pop(ADMIN_SESSION_KEY, None)
         session[USER_SESSION_KEY] = user.id
         session.modified = True
         flash("Login realizado com sucesso.", "success")

@@ -16,6 +16,7 @@ from app.models import (
     Occurrence,
     OccurrenceMapping,
     OccurrenceStatusHistory,
+    OccurrenceUserMessage,
     Product,
     User,
     db,
@@ -632,6 +633,16 @@ def checkout_finalize():
             changed_by_admin_id=None,
         )
     )
+
+    if occurrence.observation:
+        db.session.add(
+            OccurrenceUserMessage(
+                occurrence_id=occurrence.id,
+                user_id=user.id,
+                message_text=occurrence.observation,
+            )
+        )
+
     db.session.commit()
 
     _save_cart({})

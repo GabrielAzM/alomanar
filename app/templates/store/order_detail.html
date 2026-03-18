@@ -17,7 +17,7 @@
             <p><strong>Telefone:</strong> {{ order.contact_phone or "-" }}</p>
             <p><strong>Email:</strong> {{ order.contact_email or "-" }}</p>
             <p><strong>Janela de entrega:</strong> {{ order.delivery_window or "-" }}</p>
-            <p><strong>Observacao do pedido:</strong> {{ order.observation or "-" }}</p>
+            <p><strong>Relato inicial:</strong> {{ order.observation or "-" }}</p>
             <p><strong>Total:</strong> {{ order.total_cents | brl }}</p>
         </article>
 
@@ -82,6 +82,13 @@
                         <span>{{ message.created_at | datetime_br }} - {{ message.user.username }}</span>
                     </li>
                 {% endfor %}
+            </ul>
+        {% elif order.observation %}
+            <ul class="order-list">
+                <li>
+                    <p>{{ order.observation }}</p>
+                    <span>{{ order.created_at | datetime_br }} - relato inicial do checkout</span>
+                </li>
             </ul>
         {% else %}
             <p>Nenhuma mensagem enviada ate o momento.</p>

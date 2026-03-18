@@ -37,7 +37,13 @@
 
             <div class="header-actions">
                 <div class="header-auth-links">
-                    {% if current_user %}
+                    {% if current_admin %}
+                        <span class="header-user-badge admin-badge">Admin: {{ current_admin.username }}</span>
+                        <a class="header-inline-link admin-link" href="{{ url_for('admin.occurrences_page') }}">Painel</a>
+                        <form action="{{ url_for('admin.logout') }}" method="post">
+                            <button class="header-inline-button admin-link" type="submit">Sair</button>
+                        </form>
+                    {% elif current_user %}
                         <span class="header-user-badge">{{ current_user.full_name or current_user.username }}</span>
                         <a class="header-inline-link" href="{{ url_for('user.orders_page') }}">Minha conta</a>
                         <form action="{{ url_for('user.logout') }}" method="post">
@@ -79,11 +85,17 @@
 
     <nav class="main-nav">
         <ul class="nav-list">
-            <li><a href="{{ url_for('store.products_page') }}" class="nav-link {% if active_nav in ['home', 'produtos'] %}active-nav{% endif %}">TODOS OS PRODUTOS</a></li>
-            <li><a href="{{ url_for('store.kits_page') }}" class="nav-link {% if active_nav == 'kits' %}active-nav{% endif %}">KITS</a></li>
-            <li><a href="{{ url_for('store.skincare_page') }}" class="nav-link {% if active_nav == 'skincare' %}active-nav{% endif %}">SKINCARE</a></li>
-            <li><a href="{{ url_for('store.maquiagem_page') }}" class="nav-link {% if active_nav == 'maquiagem' %}active-nav{% endif %}">MAQUIAGEM</a></li>
-            <li><a href="{{ url_for('store.institutional_page') }}" class="nav-link {% if active_nav == 'institucional' %}active-nav{% endif %}">INSTITUCIONAL</a></li>
+            {% if current_admin and request.path.startswith('/admin') %}
+                <li><a href="{{ url_for('admin.occurrences_page') }}" class="nav-link {% if active_nav == 'admin-occurrences' %}active-nav{% endif %}">OCORRENCIAS</a></li>
+                <li><a href="{{ url_for('admin.mappings_page') }}" class="nav-link {% if active_nav == 'admin-mappings' %}active-nav{% endif %}">MAPEAMENTOS</a></li>
+                <li><a href="{{ url_for('store.home_page') }}" class="nav-link">VER LOJA</a></li>
+            {% else %}
+                <li><a href="{{ url_for('store.products_page') }}" class="nav-link {% if active_nav in ['home', 'produtos'] %}active-nav{% endif %}">TODOS OS PRODUTOS</a></li>
+                <li><a href="{{ url_for('store.kits_page') }}" class="nav-link {% if active_nav == 'kits' %}active-nav{% endif %}">KITS</a></li>
+                <li><a href="{{ url_for('store.skincare_page') }}" class="nav-link {% if active_nav == 'skincare' %}active-nav{% endif %}">SKINCARE</a></li>
+                <li><a href="{{ url_for('store.maquiagem_page') }}" class="nav-link {% if active_nav == 'maquiagem' %}active-nav{% endif %}">MAQUIAGEM</a></li>
+                <li><a href="{{ url_for('store.institutional_page') }}" class="nav-link {% if active_nav == 'institucional' %}active-nav{% endif %}">INSTITUCIONAL</a></li>
+            {% endif %}
         </ul>
     </nav>
 
@@ -180,20 +192,20 @@
             <div class="footer-column">
                 <h3>Conta</h3>
                 <ul class="footer-links">
-                    {% if current_user %}
+                    {% if current_admin %}
+                        <li><a href="{{ url_for('admin.occurrences_page') }}">Painel interno</a></li>
+                        <li><a href="{{ url_for('admin.mappings_page') }}">Mapeamentos</a></li>
+                        <li><span class="footer-session-note">Sessao admin: {{ current_admin.username }}</span></li>
+                    {% elif current_user %}
                         <li><a href="{{ url_for('user.orders_page') }}">Minha conta</a></li>
                     {% else %}
                         <li><a href="{{ url_for('user.login_page') }}">Entrar</a></li>
                         <li><a href="{{ url_for('user.register_page') }}">Criar conta</a></li>
                     {% endif %}
                     <li><a href="{{ url_for('store.institutional_page') }}">Institucional</a></li>
-                    <li>
-                        {% if current_admin %}
-                            <a href="{{ url_for('admin.occurrences_page') }}">Painel interno</a>
-                        {% else %}
-                            <a href="{{ url_for('admin.login_page') }}">Acesso interno</a>
-                        {% endif %}
-                    </li>
+                    {% if not current_admin %}
+                        <li><a href="{{ url_for('admin.login_page') }}">Acesso interno</a></li>
+                    {% endif %}
                 </ul>
             </div>
 

@@ -38,7 +38,7 @@
             <p><strong>CEP:</strong> {{ occurrence.address_zip_code or "-" }}</p>
             <p><strong>Janela de entrega:</strong> {{ occurrence.delivery_window or "-" }}</p>
             <p><strong>Instrucoes:</strong> {{ occurrence.delivery_notes or "-" }}</p>
-            <p><strong>Observacao:</strong> {{ occurrence.observation or "-" }}</p>
+            <p><strong>Relato inicial para encaminhamento:</strong> {{ occurrence.observation or "-" }}</p>
             <p><strong>Subtotal:</strong> {{ occurrence.subtotal_cents | brl }}</p>
             <p><strong>Desconto:</strong> {{ occurrence.discount_cents | brl }}</p>
             <p><strong>Total:</strong> {{ occurrence.total_cents | brl }}</p>
@@ -119,7 +119,7 @@
     </article>
 
     <article class="admin-card">
-        <h2>Mensagens da usuaria</h2>
+        <h2>Relato e mensagens da usuaria</h2>
         {% if occurrence.user_messages %}
             <ul class="admin-list">
                 {% for message in occurrence.user_messages %}
@@ -128,6 +128,16 @@
                         <small>{{ message.created_at | datetime_br }} - {{ message.user.username }} ({{ message.user.email }})</small>
                     </li>
                 {% endfor %}
+            </ul>
+        {% elif occurrence.observation %}
+            <ul class="admin-list">
+                <li>
+                    <p>{{ occurrence.observation }}</p>
+                    <small>
+                        {{ occurrence.created_at | datetime_br }}
+                        {% if occurrence.user %} - {{ occurrence.user.username }} (relato inicial no checkout){% endif %}
+                    </small>
+                </li>
             </ul>
         {% else %}
             <p>Sem mensagens da usuaria.</p>
